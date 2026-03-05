@@ -279,6 +279,42 @@ Top priority: {highest_impact_fix}.
 
 Order the fix priority list by: critical fails first (sorted by impact), then warnings, then nice-to-haves. Use red circle for critical, yellow circle for important, green circle for nice to have.
 
+**After saving the report, save an audit log** to `docs/logs/audit-log-{domain}-{YYYY-MM-DD}.md`.
+Create the `docs/logs/` directory if it doesn't exist.
+
+The log captures what happened during the audit for future skill improvement. Template:
+
+```markdown
+# Audit Log: {domain}
+**Date:** {date}
+
+## Crawl Summary
+- **Pages crawled:** {list of URLs with status}
+- **Technical files checked:** robots.txt ({status}), sitemap.xml ({status}/{url_count} URLs), llms.txt ({status}), 404 test ({status})
+- **PageSpeed API:** {success with scores | failed with error}
+- **Blog post crawled:** {yes/no, which URL}
+
+## Issues During Audit
+- {any crawl failures, fallbacks used, unexpected behavior}
+
+## Check Results Summary
+| Category | Passed | Warnings | Failed | N/A | Score |
+|---|---|---|---|---|---|
+| AEO | {n} | {n} | {n} | {n} | {n}/100 |
+| GEO | {n} | {n} | {n} | {n} | {n}/100 |
+| SEO Technical | {n} | {n} | {n} | {n} | {n}/100 |
+| SEO On-Page | {n} | {n} | {n} | {n} | {n}/100 |
+| Structured Data | {n} | {n} | {n} | {n} | {n}/100 |
+
+## Timing
+- Phase A (parallel technical + homepage): ~{n}s
+- Phase B (page discovery): ~{n}s
+- Phase C (sequential page crawl): ~{n}s
+- Phase D (blog post): ~{n}s
+- Analysis + scoring: ~{n}s
+- Report writing: ~{n}s
+```
+
 ## Compare Mode
 
 When the user says "compare site-a.com site-b.com [site-c.com]":
