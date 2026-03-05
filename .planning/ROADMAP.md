@@ -70,10 +70,10 @@ Plans:
   1. Audit report includes an AI crawler policy section that grades robots.txt strategy and lists which AI bots are allowed, blocked, or unaddressed
   2. When reference files are older than 90 days, the audit warns the user at startup and suggests running an update
   3. Compare mode outputs a single score-comparison table (no full side-by-side category reports)
-**Plans**: TBD
+**Plans:** 1 plan
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md — AI crawler policy grading, stale reference file warnings, simplified compare mode
 
 ## Progress
 
@@ -85,4 +85,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Lighthouse + Scoring Lock | 1/2 | In Progress|  |
 | 2. Modularization | 0/1 | Not started | - |
 | 3. Fast Crawl | 0/1 | Not started | - |
-| 4. Feature Polish | 0/0 | Not started | - |
+| 4. Feature Polish | 0/1 | Not started | - |
