@@ -34,7 +34,7 @@ Fire all of these in a single parallel batch:
 4. **curl 404 test** — `curl -sI {domain}/nonexistent-page-404-test` — verify proper 404 status
 5. **Playwright homepage** — navigate to {domain}, run the JS extraction function (see Section 1.1)
 6. **Read reference files** — load all 5 reference files from `references/`
-7. **PageSpeed API** (optional) — run `scripts/pagespeed.sh {domain}` — if it fails (429/quota), note "Core Web Vitals: untestable (API quota exceeded)" and move on
+7. **Lighthouse** — run `scripts/lighthouse.sh {domain}` — returns JSON with performance/accessibility/seo/best-practices scores and Core Web Vitals (LCP, CLS, TBT). No API key needed. If it fails, mark CWV checks as UNTESTABLE and continue.
 
 #### Phase B: Discover pages to crawl
 
