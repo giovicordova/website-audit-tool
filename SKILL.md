@@ -141,6 +141,26 @@ Read the reference files for the requested categories from this skill's `referen
 
 Only read the files for categories being audited.
 
+### 2.1 Check Reference File Freshness
+
+After loading the reference files above, check the `Last reviewed: YYYY-MM-DD` date in each loaded file. Compare each date against the current date.
+
+If ANY file's last-reviewed date is more than 90 days ago, print this warning BEFORE proceeding to step 3:
+
+```
+Warning: {N} reference file(s) are stale (>90 days since last review):
+  - references/{file}.md — last reviewed {date} ({days} days ago)
+
+Audit results may not reflect current best practices.
+Consider reviewing these files to ensure rules are up to date.
+
+Proceeding with audit...
+```
+
+This is informational only — do NOT ask for confirmation, do NOT stop the audit. Print the warning and continue.
+
+If all files are within 90 days, say nothing — no "all files are fresh" message.
+
 ### 3. Check Each Category
 
 For each category, go through every check in the reference file. For each check:
