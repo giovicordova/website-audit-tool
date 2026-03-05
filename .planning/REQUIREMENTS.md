@@ -80,33 +80,33 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PERF-01 | TBD | Pending |
-| PERF-02 | TBD | Pending |
-| PERF-03 | TBD | Pending |
-| SCOR-01 | TBD | Pending |
-| SCOR-02 | TBD | Pending |
-| SCOR-03 | TBD | Pending |
-| MODU-01 | TBD | Pending |
-| MODU-02 | TBD | Pending |
-| MODU-03 | TBD | Pending |
-| MODU-04 | TBD | Pending |
-| CRAW-01 | TBD | Pending |
-| CRAW-02 | TBD | Pending |
-| CRAW-03 | TBD | Pending |
-| CRAW-04 | TBD | Pending |
-| AICR-01 | TBD | Pending |
-| AICR-02 | TBD | Pending |
-| AICR-03 | TBD | Pending |
-| RULE-01 | TBD | Pending |
-| RULE-02 | TBD | Pending |
-| COMP-01 | TBD | Pending |
-| COMP-02 | TBD | Pending |
+| PERF-01 | Phase 1 | Pending |
+| PERF-02 | Phase 1 | Pending |
+| PERF-03 | Phase 1 | Pending |
+| SCOR-01 | Phase 1 | Pending |
+| SCOR-02 | Phase 1 | Pending |
+| SCOR-03 | Phase 1 | Pending |
+| MODU-01 | Phase 2 | Pending |
+| MODU-02 | Phase 2 | Pending |
+| MODU-03 | Phase 2 | Pending |
+| MODU-04 | Phase 2 | Pending |
+| CRAW-01 | Phase 3 | Pending |
+| CRAW-02 | Phase 3 | Pending |
+| CRAW-03 | Phase 3 | Pending |
+| CRAW-04 | Phase 3 | Pending |
+| AICR-01 | Phase 4 | Pending |
+| AICR-02 | Phase 4 | Pending |
+| AICR-03 | Phase 4 | Pending |
+| RULE-01 | Phase 4 | Pending |
+| RULE-02 | Phase 4 | Pending |
+| COMP-01 | Phase 4 | Pending |
+| COMP-02 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21
+- Mapped to phases: 21
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-05*
-*Last updated: 2026-03-05 after initial definition*
+*Last updated: 2026-03-05 after roadmap creation*
