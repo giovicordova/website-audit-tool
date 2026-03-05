@@ -1,4 +1,7 @@
 docs/
+.claude/hooks.json
+.claude/hooks/
+.claude/session-logs/
 .env
 *.log
 .DS_Store
