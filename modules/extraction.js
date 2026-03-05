@@ -1,5 +1,5 @@
 // JS Extraction Function for Website Audit Skill
-// Used by SKILL.md via browser_evaluate on every crawled page.
+// Used by SKILL.md via evaluate_script on every crawled page.
 // IMPORTANT: This MUST be an arrow function, NOT an IIFE.
 // Playwright MCP rejects self-invoking functions.
 
