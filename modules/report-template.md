@@ -24,6 +24,25 @@ Top priority: {highest_impact_fix}.
 - **JSON-LD schema types found:** {comma-separated unique @type values across all pages}
 - **AI bot policy:** {summary of robots.txt AI bot rules, e.g., "Allows ChatGPT-User, PerplexityBot. Blocks GPTBot, Google-Extended."}
 
+## AI Crawler Policy
+
+**Strategy Grade: {grade}** — {one-line summary, e.g., "Intentional strategy with 2 bots unaddressed"}
+
+### Training Bots
+| Bot | Provider | Status |
+|-----|----------|--------|
+| {bot_name} | {provider} | {Blocked/Allowed/Unaddressed} |
+...
+
+### Retrieval Bots
+| Bot | Provider | Status |
+|-----|----------|--------|
+| {bot_name} | {provider} | {Blocked/Allowed/Unaddressed} |
+...
+
+### Recommendation
+{Actionable recommendation: which bots to block/allow and why. Default recommendation is block training bots + allow retrieval bots for AI search visibility. List specific missing rules the site should add.}
+
 ## AEO — Answer Engine Optimization ({score}/100)
 ### Passed
 - {check}: {evidence}

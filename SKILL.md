@@ -29,6 +29,46 @@ Default: all 5 categories, homepage + 3-4 pages selected by template diversity (
 Fire all of these in a single parallel batch:
 
 1. **curl robots.txt** — `curl -sL {domain}/robots.txt` (NEVER use Playwright for non-HTML files)
+
+   **AI Crawler Policy Analysis** — Using the robots.txt content from step 1, analyze AI bot rules:
+
+   a. Check the following canonical AI bot list against the robots.txt:
+
+   | Provider | Bot Name | Type | Purpose |
+   |----------|----------|------|---------|
+   | OpenAI | GPTBot | Training | Collects data for model training |
+   | OpenAI | OAI-SearchBot | Retrieval | Real-time search indexing |
+   | OpenAI | ChatGPT-User | Retrieval | Fetches pages during conversations |
+   | Anthropic | ClaudeBot | Training | Collects data for Claude training |
+   | Anthropic | Claude-SearchBot | Retrieval | Indexes content for search |
+   | Anthropic | Claude-User | Retrieval | Fetches pages during conversations |
+   | Google | Google-Extended | Training | Training data for Gemini/Bard |
+   | Google | GoogleOther | Training | Additional Google AI training |
+   | Perplexity | PerplexityBot | Retrieval | Indexes for answer engine |
+   | Perplexity | Perplexity-User | Retrieval | Real-time page fetching |
+   | Apple | Applebot-Extended | Training | Extended Apple AI training |
+   | Meta | Meta-ExternalAgent | Training | Meta AI training data |
+   | Amazon | Amazonbot | Retrieval | Alexa/Amazon search |
+   | ByteDance | Bytespider | Training | TikTok/ByteDance AI training |
+
+   b. For each bot, classify as:
+      - **Blocked**: Has its own `User-agent` section with `Disallow: /`, OR falls under `User-agent: *` with `Disallow: /` and has NO specific override
+      - **Allowed**: Has its own `User-agent` section without `Disallow: /`, OR has an explicit `Allow` directive, OR no blocking rule applies
+      - **Unaddressed**: Not mentioned in robots.txt at all (no specific rule, no wildcard coverage)
+
+   c. **IMPORTANT — Precedence rule:** Specific `User-agent` rules override wildcard (`*`) rules. A bot with its own `User-agent` section is governed by that section only, NOT by the `*` section.
+
+   d. Also check for any `User-agent` entries containing "AI", "bot", "crawler", "spider" that are NOT in the canonical list — report these as "Other AI bots detected."
+
+   e. Grade the strategy:
+      - **A**: Training bots blocked, retrieval bots allowed, no major bots unaddressed
+      - **B**: Most bots addressed, 1-2 unaddressed
+      - **C**: Some bots addressed but significant gaps or inconsistencies
+      - **D**: Only 1-2 bots addressed, most unaddressed
+      - **F**: No AI bot rules in robots.txt at all
+
+   f. This grade is **informational only** — it is NOT part of the weighted overall score.
+
 2. **curl sitemap.xml** — `curl -sL {domain}/sitemap.xml` — parse URLs from `<loc>` tags
 3. **curl llms.txt** — `curl -sI {domain}/llms.txt` — check HTTP status only (200 = exists)
 4. **curl 404 test** — `curl -sI {domain}/nonexistent-page-404-test` — verify proper 404 status
