@@ -50,17 +50,17 @@ Plans:
 
 ### Phase 3: Fast Crawl
 **Goal**: Full audits complete in under 1 minute with user control over which pages get audited
-**Depends on**: Phase 2 (crawl logic lives in skill/crawl.md after modularization)
+**Depends on**: Phase 2 (crawl logic lives in SKILL.md after modularization)
 **Requirements**: CRAW-01, CRAW-02, CRAW-03, CRAW-04
 **Success Criteria** (what must be TRUE):
   1. A full audit of a typical site (5-7 pages) completes in under 1 minute end-to-end
   2. Page selection picks 3-4 pages by template diversity instead of 7 most-linked
   3. Discovered pages are shown to the user who chooses which ones to audit before crawling starts
   4. Playwright reuses browser context across pages instead of creating new instances
-**Plans**: TBD
+**Plans:** 1 plan
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md — Rewrite crawl phases B/C/D for template-diversity selection, interactive user choice, browser reuse, and no-snapshot policy
 
 ### Phase 4: Feature Polish
 **Goal**: Audit reports cover AI crawler policy, warn about stale rules, and compare mode is streamlined
@@ -84,5 +84,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Lighthouse + Scoring Lock | 1/2 | In Progress|  |
 | 2. Modularization | 0/1 | Not started | - |
-| 3. Fast Crawl | 0/0 | Not started | - |
+| 3. Fast Crawl | 0/1 | Not started | - |
 | 4. Feature Polish | 0/0 | Not started | - |
