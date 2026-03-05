@@ -28,11 +28,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Lighthouse runs locally with zero API keys or external service dependencies
   3. Editing a reference file and running the scoring test suite produces a clear PASS/FAIL indicating whether scores changed
   4. Test fixtures use synthetic data, not snapshots of real sites
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Lighthouse CLI wrapper + reference/SKILL.md updates + output shape test
+- [ ] 01-02-PLAN.md — Scoring engine (score.py) + synthetic fixtures + golden-file test runner
 
 ### Phase 2: Modularization
 **Goal**: SKILL.md is a short orchestrator that dispatches to focused module files, making edits safe and isolated
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Lighthouse + Scoring Lock | 0/0 | Not started | - |
+| 1. Lighthouse + Scoring Lock | 0/2 | Planning complete | - |
 | 2. Modularization | 0/0 | Not started | - |
 | 3. Fast Crawl | 0/0 | Not started | - |
 | 4. Feature Polish | 0/0 | Not started | - |
