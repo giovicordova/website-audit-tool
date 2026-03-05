@@ -83,8 +83,8 @@ Order the fix priority list by: critical fails first (sorted by impact), then wa
 
 When the user says "compare site-a.com site-b.com [site-c.com]":
 
-1. Run the full audit flow for each site independently
-2. Before the individual reports, output a comparison table:
+1. Run the full audit flow for each site independently (audits still execute fully to generate scores; individual site reports are saved to their own files as usual)
+2. Output a comparison table:
 
 ### Comparison Table Format
 
@@ -99,4 +99,18 @@ When the user says "compare site-a.com site-b.com [site-c.com]":
 
 3. Below the table, write a 2-3 sentence analysis: who wins overall, where each site has an advantage, and the single biggest gap between them.
 
-4. Save the full comparison report (table + individual audits) to `docs/w-audit/compare-{domain1}-vs-{domain2}-{YYYY-MM-DD}T{HH-MM}.md`. Create the `docs/w-audit/` directory if it doesn't exist.
+4. Below the analysis, add a Top Fixes section:
+
+### Top Fixes Per Site
+
+**{domain-a}:**
+1. {highest-impact fix from that site's audit} ({category})
+2. {second fix} ({category})
+3. {third fix} ({category})
+
+**{domain-b}:**
+1. {highest-impact fix} ({category})
+2. {second fix} ({category})
+3. {third fix} ({category})
+
+5. Save the comparison report (table + analysis + top fixes ONLY) to `docs/w-audit/compare-{domain1}-vs-{domain2}-{YYYY-MM-DD}T{HH-MM}.md`. Create the `docs/w-audit/` directory if it doesn't exist. Do NOT include full category-by-category breakdowns per site in the compare file — users who want per-site details can read the individual audit files.
