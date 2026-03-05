@@ -1,0 +1,12 @@
+{
+  "name": "scoring-all-fail",
+  "description": "Synthetic fixture: all checks fail. 0/14 = 0",
+  "checks": [
+    {"severity": "critical", "result": "FAIL"},
+    {"severity": "critical", "result": "FAIL"},
+    {"severity": "critical", "result": "FAIL"},
+    {"severity": "important", "result": "FAIL"},
+    {"severity": "important", "result": "FAIL"},
+    {"severity": "nice_to_have", "result": "FAIL"}
+  ]
+}

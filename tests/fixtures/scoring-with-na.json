@@ -1,0 +1,12 @@
+{
+  "name": "scoring-with-na",
+  "description": "Synthetic fixture: includes N/A and UNTESTABLE (excluded from scoring). 9/9 = 100",
+  "checks": [
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "critical", "result": "N/A"},
+    {"severity": "important", "result": "UNTESTABLE"},
+    {"severity": "important", "result": "PASS"},
+    {"severity": "nice_to_have", "result": "PASS"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "scoring-mixed",
+  "description": "Synthetic fixture: mix of PASS/WARNING/FAIL. (6+0+2+1+1)/(9+4+1) = 10/14 = 71",
+  "checks": [
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "critical", "result": "FAIL"},
+    {"severity": "important", "result": "PASS"},
+    {"severity": "important", "result": "WARNING"},
+    {"severity": "nice_to_have", "result": "PASS"}
+  ]
+}

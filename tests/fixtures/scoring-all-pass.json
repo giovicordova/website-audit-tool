@@ -1,0 +1,12 @@
+{
+  "name": "scoring-all-pass",
+  "description": "Synthetic fixture: all checks pass. 3 critical + 2 important + 1 nice = 14/14 = 100",
+  "checks": [
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "critical", "result": "PASS"},
+    {"severity": "important", "result": "PASS"},
+    {"severity": "important", "result": "PASS"},
+    {"severity": "nice_to_have", "result": "PASS"}
+  ]
+}
