@@ -201,6 +201,7 @@ For each category:
 - Critical checks: 3 points each
 - Important checks: 2 points each
 - Nice to Have checks: 1 point each
+- PASS = full points, WARNING = half points (rounded down), FAIL = 0 points
 - Score = (points earned / points possible) * 100
 
 Overall grade (weighted):
