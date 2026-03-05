@@ -26,10 +26,10 @@
 
 ### Crawl Speed
 
-- [ ] **CRAW-01**: Full audit completes in under 1 minute (currently ~2-3 min)
-- [ ] **CRAW-02**: Smart page selection: 3-4 pages by template diversity instead of 7 most-linked
-- [ ] **CRAW-03**: Playwright optimizations: reuse browser context, minimize snapshot processing
-- [ ] **CRAW-04**: Always show discovered pages and let user choose which to audit before crawling
+- [x] **CRAW-01**: Full audit completes in under 1 minute (currently ~2-3 min)
+- [x] **CRAW-02**: Smart page selection: 3-4 pages by template diversity instead of 7 most-linked
+- [x] **CRAW-03**: Playwright optimizations: reuse browser context, minimize snapshot processing
+- [x] **CRAW-04**: Always show discovered pages and let user choose which to audit before crawling
 
 ### AI Crawler Policy
 
@@ -90,10 +90,10 @@
 | MODU-02 | Phase 2 | Complete |
 | MODU-03 | Phase 2 | Complete |
 | MODU-04 | Phase 2 | Complete |
-| CRAW-01 | Phase 3 | Pending |
-| CRAW-02 | Phase 3 | Pending |
-| CRAW-03 | Phase 3 | Pending |
-| CRAW-04 | Phase 3 | Pending |
+| CRAW-01 | Phase 3 | Complete |
+| CRAW-02 | Phase 3 | Complete |
+| CRAW-03 | Phase 3 | Complete |
+| CRAW-04 | Phase 3 | Complete |
 | AICR-01 | Phase 4 | Pending |
 | AICR-02 | Phase 4 | Pending |
 | AICR-03 | Phase 4 | Pending |
