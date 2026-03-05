@@ -13,9 +13,9 @@
 
 ### Scoring Accuracy
 
-- [ ] **SCOR-01**: Golden-file scoring tests detect regressions when reference files change
-- [ ] **SCOR-02**: Test fixtures use synthetic data (not real site snapshots) to avoid embedding current bugs as baselines
-- [ ] **SCOR-03**: Each reference file edit triggers a test that verifies score impact is intentional
+- [x] **SCOR-01**: Golden-file scoring tests detect regressions when reference files change
+- [x] **SCOR-02**: Test fixtures use synthetic data (not real site snapshots) to avoid embedding current bugs as baselines
+- [x] **SCOR-03**: Each reference file edit triggers a test that verifies score impact is intentional
 
 ### Modularization
 
@@ -83,9 +83,9 @@
 | PERF-01 | Phase 1 | Pending |
 | PERF-02 | Phase 1 | Pending |
 | PERF-03 | Phase 1 | Pending |
-| SCOR-01 | Phase 1 | Pending |
-| SCOR-02 | Phase 1 | Pending |
-| SCOR-03 | Phase 1 | Pending |
+| SCOR-01 | Phase 1 | Complete |
+| SCOR-02 | Phase 1 | Complete |
+| SCOR-03 | Phase 1 | Complete |
 | MODU-01 | Phase 2 | Pending |
 | MODU-02 | Phase 2 | Pending |
 | MODU-03 | Phase 2 | Pending |

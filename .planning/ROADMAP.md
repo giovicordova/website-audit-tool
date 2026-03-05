@@ -28,7 +28,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Lighthouse runs locally with zero API keys or external service dependencies
   3. Editing a reference file and running the scoring test suite produces a clear PASS/FAIL indicating whether scores changed
   4. Test fixtures use synthetic data, not snapshots of real sites
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 01-01-PLAN.md — Lighthouse CLI wrapper + reference/SKILL.md updates + output shape test
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Lighthouse + Scoring Lock | 0/2 | Planning complete | - |
+| 1. Lighthouse + Scoring Lock | 1/2 | In Progress|  |
 | 2. Modularization | 0/0 | Not started | - |
 | 3. Fast Crawl | 0/0 | Not started | - |
 | 4. Feature Polish | 0/0 | Not started | - |
