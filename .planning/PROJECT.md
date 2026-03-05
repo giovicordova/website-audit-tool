@@ -1,8 +1,8 @@
-# Website Audit Tool v2
+# Website Audit Tool
 
 ## What This Is
 
-A Claude Code skill that audits any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization). It crawls pages, checks them against curated rules from authoritative sources, scores each category, and outputs a prioritized report with specific fixes. Used across multiple websites for competitive analysis and ongoing optimization.
+A Claude Code skill that audits any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization). Crawls pages via Playwright with template-diversity selection, checks against curated reference rules, scores each category with a deterministic formula, and outputs prioritized reports. Includes AI crawler policy grading, stale rule detection, and simplified compare mode for competitive analysis.
 
 ## Core Value
 
@@ -12,78 +12,68 @@ Accurate, consistent scoring that produces the same results for the same site re
 
 ### Validated
 
-- Audit any website against 5 categories (AEO, GEO, SEO Technical, SEO On-Page, Structured Data)
-- Curated reference rules from authoritative sources (Google Search Central, web.dev, Schema.org)
-- Scored report with letter grade, category breakdowns, and prioritized fix list
-- Compare mode for side-by-side competitive analysis
-- JS extraction function that pulls all page metadata in a single browser_evaluate call
-- Markdown reports saved to docs/w-audit/
+- Lighthouse CLI replaces PageSpeed API (local, no API key) -- v1.0
+- Golden-file scoring tests catch regressions automatically -- v1.0
+- SKILL.md modularized: extraction.js + report-template.md + orchestrator -- v1.0
+- Template-diversity crawl with interactive page selection, under 1 minute -- v1.0
+- AI Crawler Policy grading (14-bot list, training vs retrieval, A-F grades) -- v1.0
+- Stale reference file detection (>90 days warning) -- v1.0
+- Simplified compare mode (score table + top fixes, no full category reports) -- v1.0
+- Deterministic scoring formula (Critical=3, Important=2, Nice=1, WARNING=half) -- v1.0
 
 ### Active
 
-- [ ] Break SKILL.md into focused modules (crawl, scoring, report template as separate files)
-- [ ] Replace PageSpeed API with Lighthouse CLI (no API key, no rate limits, local execution)
-- [ ] Add golden-file tests for scoring regression detection
-- [ ] Auto-research stale reference rules (warn + update when older than 90 days)
-- [ ] Speed up audits to under 1 minute (curl + Playwright hybrid for crawl phase)
-- [ ] Always show discovered pages and let user choose which to audit before crawling
-- [ ] Simplify compare mode to score-comparison table only (drop full side-by-side reports)
-- [ ] Make scoring deterministic (explicit WARNING = half points, eliminate improvisation)
+- [ ] Auto-research stale reference rules (Claude checks against official sources, user approves)
+- [ ] curl + xmllint hybrid crawl for static HTML pages (0.06s vs 5-8s per page)
+- [ ] Entity density scoring using structural signals
+- [ ] Answer block detection (40-60 word direct answer in first 200 words)
 
 ### Out of Scope
 
 - Fix mode (auto-editing codebases) -- reports are enough, user fixes manually
 - Web dashboard -- CLI-only via Claude Code
-- Custom MCP servers -- use Playwright + curl + Lighthouse CLI
+- Custom MCP servers -- Playwright + curl + Lighthouse CLI covers everything
 - Standalone CLI tool -- Claude Code is the interface
 - HTML report export -- markdown is sufficient, git-tracked
 - Agent SDK application -- Claude Code IS the agent
+- Content quality scoring via AI -- breaks deterministic scoring (core value)
 
 ## Context
 
-This is a brownfield evolution of an existing tool. The v1 works (2 successful audits completed) but has documented concerns:
+Shipped v1.0 on 2026-03-05. 4 phases, 5 plans, 9 feature commits in a single day.
 
-**Accuracy problems:**
-- WARNING scoring was undefined (improvised per session) -- now fixed but needs tests
-- 4 Core Web Vitals checks permanently UNTESTABLE (no PageSpeed API key) -- Lighthouse CLI replaces this
-- Reference rules have no update process -- auto-staleness detection needed
+**Tech stack:** Claude Code skill (SKILL.md orchestrator + modules), Bash scripts (lighthouse.sh), Python (score.py), Playwright MCP for crawling, curl for technical files.
 
-**Speed problems:**
-- Playwright crawling is 5-8s per page (sequential, single browser instance)
-- 7-page audit takes ~60s just for crawling
-- Playwright snapshots consume context window without being used
+**Architecture:** SKILL.md (200 lines, orchestration + scoring) loads modules/extraction.js (JS extraction function) and modules/report-template.md (report formatting). scripts/lighthouse.sh wraps Lighthouse CLI. scripts/score.py provides testable scoring implementation. 19 regression tests (13 lighthouse shape + 6 scoring golden-file).
 
-**Fragility problems:**
-- SKILL.md (304 lines) is the entire application -- one bad edit breaks everything
-- No tests, no type checking, no way to validate changes except running a full audit
-- Reference file edits silently change scoring denominators
-
-**What works well:**
-- Skill-based architecture (no compiled code, no deployment)
-- JS extraction function (comprehensive, single call per page)
-- Report format (clear, actionable, consistent across audits)
-- curl for robots.txt/sitemap/llms.txt (fast, reliable)
+**Known tech debt from v1.0:**
+- scripts/pagespeed.sh is dead code (replaced by lighthouse.sh)
+- README.md is stale (doesn't reflect v1.0 structure)
+- Stale comment in modules/extraction.js (browser_evaluate -> evaluate_script)
+- SKILL.md at 200 lines (target was ~150 after modularization, grew with Phase 3+4 features)
 
 ## Constraints
 
 - **Runtime:** Claude Code skill -- no standalone runtime, no server, no build step
 - **Dependencies:** Only system tools (curl, python3, npx) + Playwright MCP + Lighthouse CLI
-- **Output:** Markdown reports in docs/w-audit/, same location as v1
-- **Speed:** Under 1 minute for a full audit (current: ~2-3 minutes)
-- **Backward compatibility:** v2 reports should be comparable to v1 reports (same categories, same grading scale)
+- **Output:** Markdown reports in docs/w-audit/
+- **Speed:** Under 1 minute for a full audit
+- **Node:** Must use Lighthouse 12.x (Node 22.16, Lighthouse 13 needs 22.19+)
+- **Backward compatibility:** Reports use same categories and grading scale across versions
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Lighthouse CLI over PageSpeed API | No API key needed, no rate limits, runs locally, same data source | -- Pending |
-| Break SKILL.md into modules | Single 304-line file is fragile, one edit risks breaking unrelated features | -- Pending |
-| Golden-file tests for scoring | Most likely source of silent regressions when reference files change | -- Pending |
-| curl + Playwright hybrid crawl | curl is fast for static HTML, Playwright only needed for JS-rendered content | -- Pending |
-| Auto-research stale rules | Reference files need updating but manual process gets forgotten | -- Pending |
-| Always ask which pages to audit | Users want control over what gets audited, not just auto-picked pages | -- Pending |
-| Simplified compare mode | Score table only, drop full side-by-side reports -- less output, same insight | -- Pending |
-| No fix mode | Reports are sufficient, user fixes manually from prioritized list | -- Pending |
+| Lighthouse CLI over PageSpeed API | No API key, no rate limits, local execution | Good -- zero UNTESTABLE checks |
+| Break SKILL.md into modules | Single 304-line file was fragile | Good -- 200-line orchestrator + 2 modules |
+| Golden-file tests for scoring | Most likely source of silent regressions | Good -- 19 tests catch changes |
+| Scoring formula stays in SKILL.md | Research showed extraction causes sync drift | Good -- score.py validates, SKILL.md executes |
+| Template-diversity page selection | Better coverage than top-N by link count | Good -- 3-4 pages cover all template types |
+| Phase D removed | Blog posts are just another template type | Good -- simpler flow |
+| evaluate_script over browser_evaluate | Matches actual chrome-devtools-mcp tool name | Good -- consistent naming |
+| AI crawler grade is informational | Not part of weighted score, different dimension | Good -- avoids score inflation |
+| curl hybrid crawl deferred to v2 | Research flagged silent JS-content misses | Pending -- revisit in v2 |
 
 ---
-*Last updated: 2026-03-05 after initialization*
+*Last updated: 2026-03-05 after v1.0 milestone*
