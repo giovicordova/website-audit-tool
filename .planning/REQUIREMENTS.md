@@ -7,9 +7,9 @@
 
 ### Performance Testing
 
-- [ ] **PERF-01**: Lighthouse CLI replaces PageSpeed API for Core Web Vitals, performance, and accessibility checks
-- [ ] **PERF-02**: Lighthouse script runs locally with no API key, no rate limits
-- [ ] **PERF-03**: Lighthouse JSON output parsed into structured scoring data (LCP, INP, CLS, performance score, accessibility score)
+- [x] **PERF-01**: Lighthouse CLI replaces PageSpeed API for Core Web Vitals, performance, and accessibility checks
+- [x] **PERF-02**: Lighthouse script runs locally with no API key, no rate limits
+- [x] **PERF-03**: Lighthouse JSON output parsed into structured scoring data (LCP, INP, CLS, performance score, accessibility score)
 
 ### Scoring Accuracy
 
@@ -80,9 +80,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PERF-01 | Phase 1 | Pending |
-| PERF-02 | Phase 1 | Pending |
-| PERF-03 | Phase 1 | Pending |
+| PERF-01 | Phase 1 | Complete |
+| PERF-02 | Phase 1 | Complete |
+| PERF-03 | Phase 1 | Complete |
 | SCOR-01 | Phase 1 | Complete |
 | SCOR-02 | Phase 1 | Complete |
 | SCOR-03 | Phase 1 | Complete |
