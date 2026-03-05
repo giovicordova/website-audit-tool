@@ -53,6 +53,12 @@ None.
 
 - Lighthouse 13.x requires Node 22.19+, system has 22.16.0. Must stay on Lighthouse 12.x.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Naming convention for audit and log files | 2026-03-05 | 94fc71c | [1-naming-convention](./quick/1-naming-convention-for-audit-and-log-file/) |
+
 ## Session Continuity
 
 Last session: 2026-03-05
