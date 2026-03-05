@@ -1,4 +1,6 @@
-# Website Audit Tool — Project Brief
+> **This was the original proposal.** The tool was built as a Claude Code skill (SKILL.md), not a Python Agent SDK application. There are no custom MCP servers, no CLI interface, and no fix mode. See `docs/plans/2026-03-05-website-audit-tool-design.md` for the actual architecture decisions.
+
+# Website Audit Tool — Project Brief (Original Proposal)
 
 ## What This Is
 
