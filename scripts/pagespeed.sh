@@ -16,10 +16,23 @@ if [ -z "$API_KEY" ]; then
   exit 1
 fi
 
-curl -s "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${URL}&key=${API_KEY}&category=PERFORMANCE&category=ACCESSIBILITY&category=BEST_PRACTICES&category=SEO&strategy=mobile" \
-  | python3 -c "
+URL_ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$URL', safe=':/'))")
+
+RESPONSE=$(curl -s "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${URL_ENCODED}&key=${API_KEY}&category=PERFORMANCE&category=ACCESSIBILITY&category=BEST_PRACTICES&category=SEO&strategy=mobile")
+
+echo "$RESPONSE" | python3 -c "
 import sys, json
+
 data = json.load(sys.stdin)
+
+if 'error' in data:
+    err = data['error']
+    print(json.dumps({'error': err.get('message', 'Unknown API error'), 'code': err.get('code', 0)}))
+    sys.exit(1)
+
+if 'lighthouseResult' not in data:
+    print(json.dumps({'error': 'No lighthouse results in response', 'code': 0}))
+    sys.exit(1)
 
 # Lighthouse scores
 cats = data.get('lighthouseResult', {}).get('categories', {})
