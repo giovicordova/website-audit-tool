@@ -2,7 +2,7 @@
 
 **First: conversational summary in chat.** 2-3 sentences covering overall grade, number of critical issues, and the single highest-impact fix.
 
-**Then: save the full report** to `docs/w-audit/{YYYY-MM-DD}-{HH-MM}-audit-{domain}.md`.
+**Then: save the full report** to `docs/w-audit/{YYYY-MM-DD}-audit-{domain}.md`.
 Create the `docs/w-audit/` directory if it doesn't exist.
 
 Report template:
@@ -77,7 +77,63 @@ Top priority: {highest_impact_fix}.
 
 Order the fix priority list by: critical fails first (sorted by impact), then warnings, then nice-to-haves. Use red circle for critical, yellow circle for important, green circle for nice to have.
 
-**Then: save the audit log** to `docs/logs/{YYYY-MM-DD}-{HH-MM}-{domain}.md` with a summary of pages crawled, checks run, and any errors encountered. This is the authoritative log — a Stop hook may also generate one, but SKILL.md is the source of truth since hooks are not version-controlled.
+**Then: save the audit log** to `docs/logs/{YYYY-MM-DD}-log-{domain}.md`.
+Create the `docs/logs/` directory if it doesn't exist.
+If a log already exists for the same domain on the same date, append a collision suffix: `-2`, `-3`, etc. (e.g., `2026-03-05-log-example.com-2.md`).
+Apply the same collision rule to audit reports in `docs/w-audit/`.
+
+This is the authoritative log — a Stop hook may also generate one, but SKILL.md is the source of truth since hooks are not version-controlled.
+
+Audit log template:
+
+````markdown
+# Audit Log: {domain}
+**Date:** {YYYY-MM-DD}
+
+## Crawl Summary
+- **Pages crawled:**
+  - {url} -- {status_code}
+  - ...
+- **Technical files checked:**
+  - robots.txt -- {status_code} ({details})
+  - sitemap.xml -- {status_code} ({url_count} URLs)
+  - llms.txt -- {status_code}
+  - 404 test -- {status_code} ({correct or issue})
+- **Blog post crawled:** {Yes (N posts) | No (reason)}
+
+## Issues During Audit
+- {Any problems, errors, workarounds, or "None"}
+
+## Check Results Summary
+| Category | Passed | Warnings | Failed | N/A | Untestable | Score |
+|---|---|---|---|---|---|---|
+| AEO | {n} | {n} | {n} | {n} | {n} | {score}/100 |
+| GEO | {n} | {n} | {n} | {n} | {n} | {score}/100 |
+| SEO Technical | {n} | {n} | {n} | {n} | {n} | {score}/100 |
+| SEO On-Page | {n} | {n} | {n} | {n} | {n} | {score}/100 |
+| Structured Data | {n} | {n} | {n} | {n} | {n} | {score}/100 |
+
+## Timing
+- Phase A (parallel technical + homepage): ~{N}s
+- Phase B (page discovery): ~{N}s
+- Phase C (sequential page crawl): ~{N}s ({N} pages)
+- Phase D (blog post): ~{N}s | skipped ({reason})
+- Analysis + scoring: ~{N}s
+- Report writing: ~{N}s
+
+## Skill Performance Notes
+
+### What worked well
+- {observation}
+
+### What was slow, failed, or required workarounds
+- {observation or "None"}
+
+### Concrete suggestions for SKILL.md improvements
+1. {suggestion}
+````
+
+Do NOT include Lighthouse scores in the log template. Lighthouse data goes in the audit report only.
 
 ## Compare Mode
 
@@ -113,6 +169,6 @@ When the user says "compare site-a.com site-b.com [site-c.com]":
 2. {second fix} ({category})
 3. {third fix} ({category})
 
-5. Save the comparison report (table + analysis + top fixes ONLY) to `docs/w-audit/{YYYY-MM-DD}-{HH-MM}-compare-{domain1}-vs-{domain2}.md`. Create the `docs/w-audit/` directory if it doesn't exist. Do NOT include full category-by-category breakdowns per site in the compare file — users who want per-site details can read the individual audit files.
+5. Save the comparison report (table + analysis + top fixes ONLY) to `docs/w-audit/{YYYY-MM-DD}-compare-{domain1}-vs-{domain2}.md`. Create the `docs/w-audit/` directory if it doesn't exist. Do NOT include full category-by-category breakdowns per site in the compare file — users who want per-site details can read the individual audit files.
 
 <!-- Testing note: Compare mode template has not been exercised in a live audit yet. Run a compare audit (e.g., "compare site-a.com site-b.com") to verify formatting. -->
