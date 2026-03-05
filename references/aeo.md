@@ -27,4 +27,5 @@ Last reviewed: 2026-03-05
 - [ ] Summary/TL;DR section at top of long-form content
 - [ ] Content structured so each section can stand alone as a citable passage
 - [ ] Content depth: 2,000+ words for informational topics — articles over 2,900 words are 59% more likely to be cited by ChatGPT
+  > **Exception:** Pages with `WebApplication` schema (app/tool landing pages) are intentionally minimal. For these pages, reduce the content-depth threshold to 200+ words and do not fail this check if the page serves a functional (non-informational) purpose.
 - [ ] Balanced mix of facts and opinions (pure opinion or pure data alone perform worse than a blend)

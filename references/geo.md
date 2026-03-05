@@ -26,6 +26,7 @@ Last reviewed: 2026-03-05
 - [ ] Expert quotes with attribution
 - [ ] Methodology or process described for any data/claims
 - [ ] Content depth: pages are 800+ words for informational topics (not thin content)
+  > **Exception:** Pages with `WebApplication` schema (app/tool landing pages) are intentionally minimal. For these pages, reduce the content-depth threshold to 200+ words and do not fail this check if the page serves a functional (non-informational) purpose.
 - [ ] Content quality score above 8.5/10 — high-quality content is 4.2x more likely to appear in AI Overviews
 - [ ] Answer-first content structure: lead with the direct answer, then expand
 
