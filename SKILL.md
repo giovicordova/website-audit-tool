@@ -281,7 +281,7 @@ Top priority: {highest_impact_fix}.
 
 Order the fix priority list by: critical fails first (sorted by impact), then warnings, then nice-to-haves. Use red circle for critical, yellow circle for important, green circle for nice to have.
 
-**Note:** The audit log (`docs/logs/audit-log-{domain}-{date}.md`) is generated automatically by the Stop hook — the skill does not need to create it.
+**Then: save the audit log** to `docs/logs/audit-log-{domain}-{YYYY-MM-DD}T{HH-MM}.md` with a summary of pages crawled, checks run, and any errors encountered. This is the authoritative log — a Stop hook may also generate one, but SKILL.md is the source of truth since hooks are not version-controlled.
 
 ## Compare Mode
 
