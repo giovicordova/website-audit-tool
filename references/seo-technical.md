@@ -7,7 +7,7 @@ Last reviewed: 2026-03-05
 ## Checks
 
 ### CRITICAL
-- [ ] robots.txt exists at /robots.txt and returns 200 (check via Playwright)
+- [ ] robots.txt exists at /robots.txt and returns 200 (check via curl)
 - [ ] robots.txt does not block important pages (no blanket Disallow: /)
 - [ ] XML sitemap exists (check /sitemap.xml or reference in robots.txt)
 - [ ] All internal links return 200 (no broken links — check via Playwright navigation)
