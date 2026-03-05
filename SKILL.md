@@ -211,6 +211,12 @@ Overall grade (weighted):
 
 Letter grade: A+ (95+), A (90+), A- (85+), B+ (80+), B (75+), B- (70+), C+ (65+), C (60+), C- (55+), D (50+), F (<50)
 
+**Handling N/A and UNTESTABLE checks:**
+- If a check is marked **CONDITIONAL** in the reference file and the condition doesn't apply, mark it **N/A**
+- N/A checks are excluded from both the numerator and denominator (they don't affect the score)
+- UNTESTABLE checks (e.g., PageSpeed API quota exceeded) are also excluded from the denominator
+- Always note which checks were N/A or UNTESTABLE in the report
+
 If only some categories were audited, weight proportionally across those.
 
 ### 5. Report
