@@ -73,7 +73,8 @@ If only some categories were audited, weight proportionally across those.
 
 **First: conversational summary in chat.** 2-3 sentences covering overall grade, number of critical issues, and the single highest-impact fix.
 
-**Then: save the full report** to `audit-{domain}-{YYYY-MM-DD}.md` in the current working directory.
+**Then: save the full report** to `docs/w-audit/audit-{domain}-{YYYY-MM-DD}.md`.
+Create the `docs/w-audit/` directory if it doesn't exist.
 
 Report template:
 
@@ -139,4 +140,4 @@ When the user says "compare site-a.com site-b.com [site-c.com]":
 
 3. Below the table, write a 2-3 sentence analysis: who wins overall, where each site has an advantage, and the single biggest gap between them.
 
-4. Save the full comparison report (table + individual audits) to `compare-{domain1}-vs-{domain2}-{date}.md`
+4. Save the full comparison report (table + individual audits) to `docs/w-audit/compare-{domain1}-vs-{domain2}-{date}.md`. Create the `docs/w-audit/` directory if it doesn't exist.
