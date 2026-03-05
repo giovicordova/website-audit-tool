@@ -11,9 +11,9 @@ FAIL=0
 assert_eq() {
   local label="$1" expected="$2" actual="$3"
   if [[ "$expected" == "$actual" ]]; then
-    echo "PASS: $label"; ((PASS++))
+    echo "PASS: $label"; ((PASS++)) || true
   else
-    echo "FAIL: $label (expected=$expected, actual=$actual)"; ((FAIL++))
+    echo "FAIL: $label (expected=$expected, actual=$actual)"; ((FAIL++)) || true
   fi
 }
 
