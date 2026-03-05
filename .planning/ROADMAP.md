@@ -43,10 +43,10 @@ Plans:
   2. JS extraction function lives in its own file and is loaded by SKILL.md during audits
   3. Report template lives in its own file and produces identical report output to current v1 format
   4. All scoring tests from Phase 1 still pass after restructuring (no regressions)
-**Plans**: TBD
+**Plans:** 1 plan
 
 Plans:
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md — Extract JS function + report template to modules, reduce SKILL.md to orchestrator
 
 ### Phase 3: Fast Crawl
 **Goal**: Full audits complete in under 1 minute with user control over which pages get audited
@@ -83,6 +83,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Lighthouse + Scoring Lock | 1/2 | In Progress|  |
-| 2. Modularization | 0/0 | Not started | - |
+| 2. Modularization | 0/1 | Not started | - |
 | 3. Fast Crawl | 0/0 | Not started | - |
 | 4. Feature Polish | 0/0 | Not started | - |
