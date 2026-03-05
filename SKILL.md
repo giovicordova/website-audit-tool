@@ -24,13 +24,41 @@ Default: all 5 categories, homepage + up to 5 most-linked internal pages.
 
 ### 1. Crawl
 
-Use Playwright MCP to visit the target URL. Collect:
-- The full HTML of each page
-- All internal links from the homepage
-- Pick up to 5 most-linked internal pages and visit those too
-- For each page: URL, title tag, meta description, all headings, all images, all links, any JSON-LD blocks, full visible text content
+#### Phase A: Technical files + homepage (parallel)
 
-If the user specified pages (e.g., /pricing /about), only visit those instead.
+Fire all of these in a single parallel batch:
+
+1. **curl robots.txt** — `curl -sL {domain}/robots.txt` (NEVER use Playwright for non-HTML files)
+2. **curl sitemap.xml** — `curl -sL {domain}/sitemap.xml` — parse URLs from `<loc>` tags
+3. **curl llms.txt** — `curl -sI {domain}/llms.txt` — check HTTP status only (200 = exists)
+4. **curl 404 test** — `curl -sI {domain}/nonexistent-page-404-test` — verify proper 404 status
+5. **Playwright homepage** — navigate to {domain}, run the JS extraction function (see Section 1.1)
+6. **Read reference files** — load all 5 reference files from `references/`
+7. **PageSpeed API** (optional) — run `scripts/pagespeed.sh {domain}` — if it fails (429/quota), note "Core Web Vitals: untestable (API quota exceeded)" and move on
+
+#### Phase B: Discover pages to crawl
+
+Combine two sources to build the crawl list:
+1. **Sitemap URLs** — all `<loc>` entries from sitemap.xml
+2. **Homepage links** — all internal links found by the JS extraction
+
+Pick pages to crawl (in this priority order):
+- Up to 5 most-linked internal pages (linked from nav/footer = high priority)
+- If a `/blog` or blog listing page is in the list, also crawl **at least 1 individual blog post** (to verify Article schema, author visibility, and content depth)
+- If the user specified pages (e.g., `/pricing /about`), only visit those instead
+
+#### Phase C: Crawl internal pages (sequential, NOT parallel)
+
+**IMPORTANT:** Crawl pages one at a time using Playwright in the main thread. Do NOT use background agents or parallel tasks for browser navigation — Playwright MCP shares a single browser instance, and concurrent navigations cause stale DOM reads (confirmed in first audit run).
+
+For each page, run a single `browser_evaluate` call with the JS extraction function (see Section 1.1).
+
+#### Phase D: Crawl blog post (if applicable)
+
+If a blog listing page was found in Phase B:
+1. From the blog listing page's extracted data, pick the first blog post link
+2. Navigate to it and run the JS extraction function
+3. This verifies Article schema, author visibility, published date, and content depth on actual blog content
 
 ### 2. Load Rules
 
