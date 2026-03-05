@@ -42,6 +42,9 @@ Fire all of these in a single parallel batch:
    | Anthropic | ClaudeBot | Training | Collects data for Claude training |
    | Anthropic | Claude-SearchBot | Retrieval | Indexes content for search |
    | Anthropic | Claude-User | Retrieval | Fetches pages during conversations |
+
+   > **Note:** Some sites use the legacy name "Claude-Web" for this bot. Treat "Claude-Web" as equivalent to "Claude-User" when classifying.
+
    | Google | Google-Extended | Training | Training data for Gemini/Bard |
    | Google | GoogleOther | Training | Additional Google AI training |
    | Perplexity | PerplexityBot | Retrieval | Indexes for answer engine |
@@ -156,6 +159,8 @@ Consider reviewing these files to ensure rules are up to date.
 
 Proceeding with audit...
 ```
+
+> **Testing note:** The staleness warning path (>90 days) has not been exercised in production since reference files are regularly updated. Manually test by temporarily backdating a reference file's `Last reviewed` date.
 
 This is informational only — do NOT ask for confirmation, do NOT stop the audit. Print the warning and continue.
 

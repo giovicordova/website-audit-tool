@@ -114,3 +114,5 @@ When the user says "compare site-a.com site-b.com [site-c.com]":
 3. {third fix} ({category})
 
 5. Save the comparison report (table + analysis + top fixes ONLY) to `docs/w-audit/{YYYY-MM-DD}-{HH-MM}-compare-{domain1}-vs-{domain2}.md`. Create the `docs/w-audit/` directory if it doesn't exist. Do NOT include full category-by-category breakdowns per site in the compare file — users who want per-site details can read the individual audit files.
+
+<!-- Testing note: Compare mode template has not been exercised in a live audit yet. Run a compare audit (e.g., "compare site-a.com site-b.com") to verify formatting. -->
