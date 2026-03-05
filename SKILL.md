@@ -74,22 +74,19 @@ Which pages should I audit? Pick from above or say "recommended".
 
 Wait for user selection before proceeding to Phase C. Cap "recommended" at 4 pages (1 per unique template type, homepage always included).
 
-#### Phase C: Crawl internal pages (sequential, NOT parallel)
+#### Phase C: Crawl selected pages (sequential, reuse browser session)
 
-**IMPORTANT:** Crawl pages one at a time using Playwright in the main thread. Do NOT use background agents or parallel tasks for browser navigation — Playwright MCP shares a single browser instance, and concurrent navigations cause stale DOM reads (confirmed in first audit run).
+**IMPORTANT:** Crawl pages one at a time in the main thread. Do NOT use background agents or parallel tasks for browser navigation — Playwright MCP shares a single browser instance, and concurrent navigations cause stale DOM reads (confirmed in first audit run).
 
-For each page, run a single `browser_evaluate` call with the JS extraction function (see Section 1.1).
-
-#### Phase D: Crawl blog post (if applicable)
-
-If a blog listing page was found in Phase B:
-1. From the blog listing page's extracted data, pick the first blog post link
-2. Navigate to it and run the JS extraction function
-3. This verifies Article schema, author visibility, published date, and content depth on actual blog content
+For each user-selected page:
+1. `navigate_page` to URL (reuses existing browser tab -- never use `new_page`)
+2. `evaluate_script` with the JS extraction function from modules/extraction.js
+3. Do NOT take snapshots or screenshots during crawl -- the extraction function captures all needed data
+4. Continue to the next page immediately after extraction completes
 
 ### 1.1 JS Extraction Function
 
-Read `modules/extraction.js` from this skill's directory. Run this exact function (or a superset of it) via a single `browser_evaluate` call on every page. Do not extract metadata piecemeal across multiple calls.
+Read `modules/extraction.js` from this skill's directory. Run this exact function (or a superset of it) via a single `evaluate_script` call on every page. Do not extract metadata piecemeal across multiple calls.
 
 **IMPORTANT:** The function must be an arrow function, NOT an IIFE -- Playwright MCP rejects self-invoking functions.
 
