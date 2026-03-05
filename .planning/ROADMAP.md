@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Lighthouse + Scoring Lock** - Replace broken PageSpeed API with Lighthouse CLI and add golden-file scoring tests
 - [ ] **Phase 2: Modularization** - Split SKILL.md monolith into focused modules with scoring tests as safety net
 - [ ] **Phase 3: Fast Crawl** - Optimize crawl speed to under 1 minute with smart page selection and user control
-- [ ] **Phase 4: Feature Polish** - AI crawler policy grading, stale rule detection, and simplified compare mode
+- [x] **Phase 4: Feature Polish** - AI crawler policy grading, stale rule detection, and simplified compare mode (completed 2026-03-05)
 
 ## Phase Details
 
@@ -70,7 +70,7 @@ Plans:
   1. Audit report includes an AI crawler policy section that grades robots.txt strategy and lists which AI bots are allowed, blocked, or unaddressed
   2. When reference files are older than 90 days, the audit warns the user at startup and suggests running an update
   3. Compare mode outputs a single score-comparison table (no full side-by-side category reports)
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] 04-01-PLAN.md — AI crawler policy grading, stale reference file warnings, simplified compare mode
@@ -85,4 +85,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Lighthouse + Scoring Lock | 1/2 | In Progress|  |
 | 2. Modularization | 0/1 | Not started | - |
 | 3. Fast Crawl | 0/1 | Not started | - |
-| 4. Feature Polish | 0/1 | Not started | - |
+| 4. Feature Polish | 1/1 | Complete   | 2026-03-05 |

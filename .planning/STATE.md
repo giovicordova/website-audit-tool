@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-05T16:19:04.067Z"
-last_activity: 2026-03-05 -- Completed 03-01 fast crawl optimization
+status: complete
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-05T16:48:43.946Z"
+last_activity: 2026-03-05 -- Completed 04-01 feature polish
 progress:
   total_phases: 4
-  completed_phases: 3
-  total_plans: 4
-  completed_plans: 4
+  completed_phases: 4
+  total_plans: 5
+  completed_plans: 5
   percent: 100
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-05)
 
 **Core value:** Accurate, consistent scoring that produces the same results for the same site regardless of when or how many times the audit runs.
-**Current focus:** Phase 3 - Fast Crawl (complete)
+**Current focus:** Phase 4 - Feature Polish (complete)
 
 ## Current Position
 
-Phase: 3 of 4 (Fast Crawl)
+Phase: 4 of 4 (Feature Polish)
 Plan: 1 of 1 in current phase (complete)
-Status: Executing
-Last activity: 2026-03-05 -- Completed 03-01 fast crawl optimization
+Status: Complete
+Last activity: 2026-03-05 -- Completed 04-01 feature polish
 
 Progress: [██████████] 100%
 
@@ -54,6 +54,7 @@ Progress: [██████████] 100%
 | Phase 01 P02 | 2min | 2 tasks | 7 files |
 | Phase 01 P01 | 3min | 2 tasks | 4 files |
 | Phase 03 P01 | 3min | 3 tasks | 1 files |
+| Phase 04 P01 | 5min | 4 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work:
 - [Phase 03]: Template classification uses URL path patterns for zero-cost page typing
 - [Phase 03]: Phase D removed -- blog posts are a regular template type in selection
 - [Phase 03]: Tool name standardized to evaluate_script (chrome-devtools-mcp actual name)
+- [Phase 04]: AI Crawler Policy grade is informational only -- not part of weighted overall score
+- [Phase 04]: Compare mode saves only table + analysis + top fixes, not full individual audits
 
 ### Pending Todos
 
@@ -85,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-05T16:16:56.885Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-05T16:48:43.943Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None

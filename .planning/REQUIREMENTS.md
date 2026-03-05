@@ -33,19 +33,19 @@
 
 ### AI Crawler Policy
 
-- [ ] **AICR-01**: Grade robots.txt AI bot strategy (distinguish training bots vs retrieval bots)
-- [ ] **AICR-02**: Report which AI bots are allowed, blocked, or unaddressed
-- [ ] **AICR-03**: Provide actionable recommendation for AI crawler policy
+- [x] **AICR-01**: Grade robots.txt AI bot strategy (distinguish training bots vs retrieval bots)
+- [x] **AICR-02**: Report which AI bots are allowed, blocked, or unaddressed
+- [x] **AICR-03**: Provide actionable recommendation for AI crawler policy
 
 ### Rule Maintenance
 
-- [ ] **RULE-01**: Detect stale reference files (>90 days since last review)
-- [ ] **RULE-02**: Warn user at audit start when rules are stale, suggest running update
+- [x] **RULE-01**: Detect stale reference files (>90 days since last review)
+- [x] **RULE-02**: Warn user at audit start when rules are stale, suggest running update
 
 ### Compare Mode
 
-- [ ] **COMP-01**: Simplified compare mode outputs score-comparison table only
-- [ ] **COMP-02**: Drop full side-by-side category reports from compare output
+- [x] **COMP-01**: Simplified compare mode outputs score-comparison table only
+- [x] **COMP-02**: Drop full side-by-side category reports from compare output
 
 ## v2 Requirements
 
@@ -94,13 +94,13 @@
 | CRAW-02 | Phase 3 | Complete |
 | CRAW-03 | Phase 3 | Complete |
 | CRAW-04 | Phase 3 | Complete |
-| AICR-01 | Phase 4 | Pending |
-| AICR-02 | Phase 4 | Pending |
-| AICR-03 | Phase 4 | Pending |
-| RULE-01 | Phase 4 | Pending |
-| RULE-02 | Phase 4 | Pending |
-| COMP-01 | Phase 4 | Pending |
-| COMP-02 | Phase 4 | Pending |
+| AICR-01 | Phase 4 | Complete |
+| AICR-02 | Phase 4 | Complete |
+| AICR-03 | Phase 4 | Complete |
+| RULE-01 | Phase 4 | Complete |
+| RULE-02 | Phase 4 | Complete |
+| COMP-01 | Phase 4 | Complete |
+| COMP-02 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 21 total
