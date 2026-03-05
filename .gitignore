@@ -5,3 +5,6 @@ docs/
 .env
 *.log
 .DS_Store
+.planning/
+.playwright-mcp/
+PROJECT-BRIEF.md

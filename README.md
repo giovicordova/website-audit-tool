@@ -49,18 +49,32 @@ Outputs a score-comparison table with analysis and top 3 fixes per site.
 
 ## Installation
 
-### Option A: Symlink (Recommended)
+### Quick Install
 
-Clone the repo and symlink it into your Claude Code skills directory:
+```bash
+curl -fsSL https://raw.githubusercontent.com/giovicordova/website-audit-tool/main/install.sh | bash
+```
+
+Or clone first, then run locally:
+
+```bash
+git clone https://github.com/giovicordova/website-audit-tool.git
+cd website-audit-tool
+./install.sh --local
+```
+
+The installer checks dependencies, clones the repo, and symlinks it to `~/.claude/skills/website-audit`.
+
+### Manual Install
+
+**Option A: Symlink (Recommended)**
 
 ```bash
 git clone https://github.com/giovicordova/website-audit-tool.git
 ln -s /path/to/website-audit-tool ~/.claude/skills/website-audit
 ```
 
-### Option B: Copy
-
-Copy the files directly:
+**Option B: Copy**
 
 ```bash
 git clone https://github.com/giovicordova/website-audit-tool.git
@@ -72,7 +86,7 @@ cp -r website-audit-tool ~/.claude/skills/website-audit
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
 - [Playwright MCP](https://github.com/anthropics/claude-code/blob/main/docs/mcp.md) configured in Claude Code (for site crawling)
 - Node.js 22+ with npx (for Lighthouse CLI)
-- Python 3 (for scoring engine)
+- Python 3 (for deterministic scoring engine)
 
 ## Scoring
 
