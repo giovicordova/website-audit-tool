@@ -18,7 +18,7 @@ The user will say something like:
 - "audit example.com /pricing /about" — only specific pages
 - "compare site-a.com site-b.com" — side-by-side comparison
 
-Default: all 5 categories, homepage + up to 5 most-linked internal pages.
+Default: all 5 categories, homepage + 3-4 pages selected by template diversity (user chooses).
 
 ## Audit Flow
 
@@ -36,16 +36,43 @@ Fire all of these in a single parallel batch:
 6. **Read reference files** — load all 5 reference files from `references/`
 7. **Lighthouse** — run `scripts/lighthouse.sh {domain}` — returns JSON with performance/accessibility/seo/best-practices scores and Core Web Vitals (LCP, CLS, TBT). No API key needed. If it fails, mark CWV checks as UNTESTABLE and continue.
 
-#### Phase B: Discover pages to crawl
+#### Phase B: Discover and classify pages
 
-Combine two sources to build the crawl list:
+Combine two sources to build the full page list:
 1. **Sitemap URLs** — all `<loc>` entries from sitemap.xml
 2. **Homepage links** — all internal links found by the JS extraction
 
-Pick pages to crawl (in this priority order):
-- Up to 5 most-linked internal pages (linked from nav/footer = high priority)
-- If a `/blog` or blog listing page is in the list, also crawl **at least 1 individual blog post** (to verify Article schema, author visibility, and content depth)
-- If the user specified pages (e.g., `/pricing /about`), only visit those instead
+**Classify each URL by template type** using URL path pattern matching:
+
+| URL Pattern | Template Type |
+|---|---|
+| `/` | homepage |
+| `/blog`, `/news`, `/posts` | blog-listing |
+| `/blog/*`, `/news/*`, `/posts/*` | blog-post |
+| `/about`, `/team`, `/company` | about |
+| `/faq`, `/help`, `/support` | faq |
+| `/pricing`, `/plans` | pricing |
+| `/contact`, `/get-in-touch` | contact |
+| `/products/*`, `/shop/*` | product |
+| `/docs/*`, `/documentation/*` | docs |
+| `/case-study/*`, `/customers/*` | case-study |
+| `/[single-segment]` | landing-page |
+
+**If the user specified pages** in the original command (e.g., "audit example.com /pricing /about"), skip the interactive step below and crawl those pages directly.
+
+**Otherwise, present the grouped list and ask the user to choose:**
+
+```
+Found {N} pages across {M} template types:
+
+  {type} ({count}): {url1}, {url2}, ...
+
+Recommended ({3-4}): {one per unique template type, prioritizing types with distinct content patterns}
+
+Which pages should I audit? Pick from above or say "recommended".
+```
+
+Wait for user selection before proceeding to Phase C. Cap "recommended" at 4 pages (1 per unique template type, homepage always included).
 
 #### Phase C: Crawl internal pages (sequential, NOT parallel)
 
