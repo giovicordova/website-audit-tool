@@ -230,6 +230,15 @@ Report template:
 {critical_count} critical issues, {warning_count} warnings, {pass_count} checks passed.
 Top priority: {highest_impact_fix}.
 
+## Site Profile
+- **Domain:** {domain}
+- **Pages in sitemap:** {sitemap_url_count}
+- **Pages crawled:** {pages_crawled_count}
+- **Page types found:** {comma-separated list, e.g., "Homepage, About, Blog listing, Blog post, Contact, FAQ, Reviews"}
+- **Detected tech:** {any observable framework/platform, e.g., "Next.js on Vercel" — infer from response headers, meta tags, or source hints}
+- **JSON-LD schema types found:** {comma-separated unique @type values across all pages}
+- **AI bot policy:** {summary of robots.txt AI bot rules, e.g., "Allows ChatGPT-User, PerplexityBot. Blocks GPTBot, Google-Extended."}
+
 ## AEO — Answer Engine Optimization ({score}/100)
 ### Passed
 - {check}: {evidence}
