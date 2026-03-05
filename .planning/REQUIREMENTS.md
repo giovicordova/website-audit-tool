@@ -19,10 +19,10 @@
 
 ### Modularization
 
-- [ ] **MODU-01**: JS extraction function extracted to a separate file (extraction.js)
-- [ ] **MODU-02**: Report template extracted to a separate file
-- [ ] **MODU-03**: Scoring formula stays in main SKILL.md (per pitfalls research)
-- [ ] **MODU-04**: SKILL.md reduced to orchestration-only (~150 lines)
+- [x] **MODU-01**: JS extraction function extracted to a separate file (extraction.js)
+- [x] **MODU-02**: Report template extracted to a separate file
+- [x] **MODU-03**: Scoring formula stays in main SKILL.md (per pitfalls research)
+- [x] **MODU-04**: SKILL.md reduced to orchestration-only (~150 lines)
 
 ### Crawl Speed
 
@@ -86,10 +86,10 @@
 | SCOR-01 | Phase 1 | Complete |
 | SCOR-02 | Phase 1 | Complete |
 | SCOR-03 | Phase 1 | Complete |
-| MODU-01 | Phase 2 | Pending |
-| MODU-02 | Phase 2 | Pending |
-| MODU-03 | Phase 2 | Pending |
-| MODU-04 | Phase 2 | Pending |
+| MODU-01 | Phase 2 | Complete |
+| MODU-02 | Phase 2 | Complete |
+| MODU-03 | Phase 2 | Complete |
+| MODU-04 | Phase 2 | Complete |
 | CRAW-01 | Phase 3 | Pending |
 | CRAW-02 | Phase 3 | Pending |
 | CRAW-03 | Phase 3 | Pending |
