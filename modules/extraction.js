@@ -23,13 +23,66 @@
   // H1 quick access
   const h1Elements = document.querySelectorAll('h1');
 
-  // Images
-  const images = [...document.querySelectorAll('img')].map(img => ({
+  // Images — standard img tags
+  const imgElements = [...document.querySelectorAll('img')].map(img => ({
     src: img.src,
     alt: img.alt || '',
     hasAlt: img.hasAttribute('alt'),
-    altIsDescriptive: img.alt && !(/^(img|image|photo|picture|screenshot)[\s_-]?\d*/i.test(img.alt))
+    altIsDescriptive: img.alt && !(/^(img|image|photo|picture|screenshot)[\s_-]?\d*/i.test(img.alt)),
+    type: 'img'
   }));
+
+  // Images — picture > source elements (responsive images, WebP/AVIF)
+  const pictureSourceElements = [...document.querySelectorAll('picture > source[srcset]')].map(source => {
+    const parentImg = source.closest('picture')?.querySelector('img');
+    const alt = parentImg?.alt || '';
+    return {
+      src: source.srcset.split(',')[0].trim().split(' ')[0],
+      alt,
+      hasAlt: !!parentImg?.hasAttribute('alt'),
+      altIsDescriptive: alt && !(/^(img|image|photo|picture|screenshot)[\s_-]?\d*/i.test(alt)),
+      type: 'picture-source'
+    };
+  });
+
+  // Images — background-image elements (Next.js data-nimg placeholders, CSS backgrounds)
+  const bgImageElements = [...document.querySelectorAll('[style*="background-image"]')].map(el => {
+    const style = el.getAttribute('style') || '';
+    const urlMatch = style.match(/background-image:\s*url\(["']?([^"')]+)["']?\)/);
+    const src = urlMatch ? urlMatch[1] : '';
+    const alt = el.getAttribute('aria-label') || '';
+    return {
+      src,
+      alt,
+      hasAlt: !!el.getAttribute('aria-label'),
+      altIsDescriptive: alt && !(/^(img|image|photo|picture|screenshot)[\s_-]?\d*/i.test(alt)),
+      type: 'background-image'
+    };
+  }).filter(el => el.src);
+
+  // Images — meaningful SVGs (skip tiny icons under 24px)
+  const svgElements = [...document.querySelectorAll('svg[role="img"], svg[aria-label], svg:not([aria-hidden="true"]):not([role="presentation"])')].filter(svg => {
+    const rect = svg.getBoundingClientRect();
+    return rect.width > 24;
+  }).map(svg => {
+    const alt = svg.getAttribute('aria-label') || svg.querySelector('title')?.textContent || '';
+    return {
+      src: 'inline-svg',
+      alt,
+      hasAlt: !!(svg.getAttribute('aria-label') || svg.querySelector('title')),
+      altIsDescriptive: alt && !(/^(img|image|photo|picture|screenshot)[\s_-]?\d*/i.test(alt)),
+      type: 'svg'
+    };
+  });
+
+  // Combine all image sources, deduplicate by src (keep first occurrence)
+  const allImageSources = [...imgElements, ...pictureSourceElements, ...bgImageElements, ...svgElements];
+  const seenSrcs = new Set();
+  const images = allImageSources.filter(img => {
+    if (seenSrcs.has(img.src)) return false;
+    seenSrcs.add(img.src);
+    return true;
+  });
 
   // Links
   const allLinks = [...document.querySelectorAll('a[href]')];
