@@ -146,8 +146,8 @@ tests/
   test-scoring.sh               # Golden-file scoring regression tests (6 assertions)
   fixtures/                     # Synthetic test data (not real site snapshots)
 docs/
-  w-audit/                      # Saved audit reports (YYYY-MM-DD-HH-MM-audit-domain.md)
-  logs/                         # Skill performance logs (YYYY-MM-DD-HH-MM-domain.md)
+  w-audit/                      # Saved audit reports (YYYY-MM-DD-audit-domain.md)
+  logs/                         # Skill performance logs (YYYY-MM-DD-log-domain.md)
 ```
 
 ## License
