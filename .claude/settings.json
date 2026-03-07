@@ -1,5 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(curl *)",
+      "Bash(scripts/lighthouse.sh *)",
+      "Bash(python scripts/score.py *)",
+      "Bash(python3 scripts/score.py *)",
+      "Bash(tests/test-*)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -16,7 +25,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-summary.sh"
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-summary.sh",
+            "timeout": 10000
           }
         ]
       }
