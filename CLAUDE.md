@@ -12,14 +12,12 @@ tests/test-scoring.sh             # Golden-file scoring regression (6 assertions
 ## Naming Conventions
 
 - Audit reports: `{YYYY-MM-DD}-audit-{domain}.md` in `docs/w-audit/`
-- Audit logs: `{YYYY-MM-DD}-log-{domain}.md` in `docs/logs/`
 
 ## Architecture
 
 - **Orchestration**: `SKILL.md` defines the full audit flow (crawl, check, score, report)
 - **Crawling**: Sequential via Playwright MCP (single browser instance, no parallel navigation)
 - **Scoring**: Deterministic formula in `scripts/score.py` — severity weights, N/A exclusion, weighted category averages
-- **Hooks**: `session-snapshot.sh` (PreToolUse) records audit file state at session start; `stop-summary.sh` (Stop) detects new/modified audits and prompts log creation
 - **References**: Category check lists in `references/` with freshness tracking (90-day staleness warning)
 
 ## File Structure

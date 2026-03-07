@@ -147,7 +147,7 @@ tests/
   fixtures/                     # Synthetic test data (not real site snapshots)
 docs/
   w-audit/                      # Saved audit reports (YYYY-MM-DD-audit-domain.md)
-  logs/                         # Skill performance logs (YYYY-MM-DD-log-domain.md)
+  logs/                         # Skill performance logs
 ```
 
 ## License

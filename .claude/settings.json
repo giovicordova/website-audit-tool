@@ -8,28 +8,5 @@
       "Bash(python3 scripts/score.py *)",
       "Bash(tests/test-*)"
     ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-snapshot.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-summary.sh",
-            "timeout": 10000
-          }
-        ]
-      }
-    ]
   }
 }
