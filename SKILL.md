@@ -1,5 +1,7 @@
 ---
 name: website-audit
+argument-hint: "[domain] [categories...]"
+allowed-tools: Read, Bash, Write, Glob, Grep, mcp__playwright__*
 description: >
   Audit any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization).
   Use this skill when the user asks to audit a website, check SEO/AEO/GEO, analyze a site's search readiness,
@@ -76,8 +78,8 @@ Fire all of these in a single parallel batch:
 3. **curl llms.txt** — `curl -sI {domain}/llms.txt` — check HTTP status only (200 = exists)
 4. **curl 404 test** — `curl -sI {domain}/nonexistent-page-404-test` — verify proper 404 status
 5. **Playwright homepage** — navigate to {domain}, run the JS extraction function (see Section 1.1)
-6. **Read reference files** — load all 5 reference files from `references/`
-7. **Lighthouse** — run `scripts/lighthouse.sh {domain}` — returns JSON with performance/accessibility/seo/best-practices scores and Core Web Vitals (LCP, CLS, TBT). No API key needed. If it fails, mark CWV checks as UNTESTABLE and continue.
+6. **Read reference files** — load all 5 reference files from `${CLAUDE_SKILL_DIR}/references/`
+7. **Lighthouse** — launch the `lighthouse-runner` subagent in the background with the domain URL. It runs `${CLAUDE_SKILL_DIR}/scripts/lighthouse.sh` and returns JSON with performance/accessibility/seo/best-practices scores and Core Web Vitals (LCP, CLS, TBT). No API key needed. Collect results before Phase C begins. If it fails, mark CWV checks as UNTESTABLE and continue.
 
 #### Phase B: Discover and classify pages
 
@@ -129,18 +131,18 @@ For each user-selected page:
 
 ### 1.1 JS Extraction Function
 
-Read `modules/extraction.js` from this skill's directory. Run this exact function (or a superset of it) via a single `evaluate_script` call on every page. Do not extract metadata piecemeal across multiple calls.
+Read `${CLAUDE_SKILL_DIR}/modules/extraction.js`. Run this exact function (or a superset of it) via a single `evaluate_script` call on every page. Do not extract metadata piecemeal across multiple calls.
 
 **IMPORTANT:** The function must be an arrow function, NOT an IIFE -- Playwright MCP rejects self-invoking functions.
 
 ### 2. Load Rules
 
-Read the reference files for the requested categories from this skill's `references/` directory:
-- `references/aeo.md` — Answer Engine Optimization
-- `references/geo.md` — Generative Engine Optimization
-- `references/seo-technical.md` — Technical SEO
-- `references/seo-on-page.md` — On-Page SEO
-- `references/structured-data.md` — Structured Data
+Read the reference files for the requested categories:
+- `${CLAUDE_SKILL_DIR}/references/aeo.md` — Answer Engine Optimization
+- `${CLAUDE_SKILL_DIR}/references/geo.md` — Generative Engine Optimization
+- `${CLAUDE_SKILL_DIR}/references/seo-technical.md` — Technical SEO
+- `${CLAUDE_SKILL_DIR}/references/seo-on-page.md` — On-Page SEO
+- `${CLAUDE_SKILL_DIR}/references/structured-data.md` — Structured Data
 
 Only read the files for categories being audited.
 
@@ -201,4 +203,4 @@ If only some categories were audited, weight proportionally across those.
 
 ### 5. Report and Compare Mode
 
-Read `modules/report-template.md` from this skill's directory. Follow the exact format for both single-site audits and compare mode. Do not improvise sections or reorder categories.
+Read `${CLAUDE_SKILL_DIR}/modules/report-template.md`. Follow the exact format for both single-site audits and compare mode. Do not improvise sections or reorder categories.

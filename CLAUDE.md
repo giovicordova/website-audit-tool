@@ -19,11 +19,8 @@ tests/test-scoring.sh             # Golden-file scoring regression (6 assertions
 - **Crawling**: Sequential via Playwright MCP (single browser instance, no parallel navigation)
 - **Scoring**: Deterministic formula in `scripts/score.py` — severity weights, N/A exclusion, weighted category averages
 - **References**: Category check lists in `references/` with freshness tracking (90-day staleness warning)
+- **Subagents**: Lighthouse runner in `.claude/agents/` — background task for parallel performance analysis
 
 ## File Structure
 
-See `README.md` for the full tree. Key entry point is `SKILL.md`.
-
-## Future Improvements
-
-- Lighthouse subagent: run Lighthouse in a background task to avoid blocking the main audit flow
+@README.md
