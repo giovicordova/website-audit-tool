@@ -145,9 +145,10 @@ tests/
   test-lighthouse-output.sh     # Lighthouse JSON shape validation (13 assertions)
   test-scoring.sh               # Golden-file scoring regression tests (6 assertions)
   fixtures/                     # Synthetic test data (not real site snapshots)
-docs/
-  w-audit/                      # Saved audit reports (YYYY-MM-DD-audit-domain.md)
-  logs/                         # Skill performance logs
+.claude/
+  agents/lighthouse-runner.md   # Background subagent for parallel Lighthouse runs
+  hooks/validate-report-name.sh # Enforces report naming convention
+  settings.json                 # Permission allowlist and hook config
 ```
 
 ## License
