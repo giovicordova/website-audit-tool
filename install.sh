@@ -26,7 +26,7 @@ if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
   echo "  --help    Show this help message."
   echo ""
   echo "What it does:"
-  echo "  1. Checks dependencies (Node.js 22+, Lighthouse, Python 3, Playwright MCP)"
+  echo "  1. Checks dependencies (Node.js 22+, Lighthouse, Python 3, Playwright CLI)"
   echo "  2. Clones the repo (or symlinks current dir with --local)"
   echo "  3. Creates a symlink at ~/.claude/skills/website-audit"
   echo ""
@@ -76,21 +76,13 @@ else
   DEPS_OK=false
 fi
 
-# Playwright MCP
-PLAYWRIGHT_FOUND=false
-for config_file in "${HOME}/.claude/mcp.json" "${HOME}/.claude/settings.json"; do
-  if [[ -f "$config_file" ]] && grep -qi "playwright" "$config_file" 2>/dev/null; then
-    PLAYWRIGHT_FOUND=true
-    break
-  fi
-done
-
-if $PLAYWRIGHT_FOUND; then
-  pass "Playwright MCP configured"
+# Playwright CLI
+if npx @anthropic-ai/claude-code-playwright --help &>/dev/null 2>&1 || npx playwright --version &>/dev/null 2>&1; then
+  pass "Playwright CLI available"
 else
-  warn "Playwright MCP not detected in ~/.claude/ config files"
-  echo "       The skill needs Playwright MCP for page crawling."
-  echo "       See: https://github.com/anthropics/claude-code/blob/main/docs/mcp.md"
+  warn "Playwright CLI not detected"
+  echo "       The skill needs Playwright CLI for headless page crawling."
+  echo "       Install: npm install -g @anthropic-ai/claude-code-playwright"
 fi
 
 echo ""

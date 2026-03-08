@@ -16,7 +16,7 @@ tests/test-scoring.sh             # Golden-file scoring regression (6 assertions
 ## Architecture
 
 - **Orchestration**: `SKILL.md` defines the full audit flow (crawl, check, score, report)
-- **Crawling**: Sequential via Playwright MCP (single browser instance, no parallel navigation)
+- **Crawling**: Parallel via Playwright CLI (`browser_run_code` with concurrent tabs for multi-page crawl)
 - **Scoring**: Deterministic formula in `scripts/score.py` — severity weights, N/A exclusion, weighted category averages
 - **References**: Category check lists in `references/` with freshness tracking (90-day staleness warning)
 - **Subagents**: Lighthouse runner in `.claude/agents/` — background task for parallel performance analysis

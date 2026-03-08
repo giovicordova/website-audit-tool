@@ -1,7 +1,7 @@
 ---
 name: website-audit
 argument-hint: "[domain] [categories...]"
-allowed-tools: Read, Bash, Write, Glob, Grep, mcp__playwright__*
+allowed-tools: Read, Bash, Write, Glob, Grep, mcp__plugin_playwright_playwright__*
 description: >
   Audit any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization).
   Use this skill when the user asks to audit a website, check SEO/AEO/GEO, analyze a site's search readiness,
@@ -77,7 +77,7 @@ Fire all of these in a single parallel batch:
 2. **curl sitemap.xml** — `curl -sL {domain}/sitemap.xml` — parse URLs from `<loc>` tags
 3. **curl llms.txt** — `curl -sI {domain}/llms.txt` — check HTTP status only (200 = exists)
 4. **curl 404 test** — `curl -sI {domain}/nonexistent-page-404-test` — verify proper 404 status
-5. **Playwright homepage** — navigate to {domain}, run the JS extraction function (see Section 1.1)
+5. **Playwright homepage** — `browser_navigate` to {domain}, then `browser_evaluate` with the JS extraction function (see Section 1.1)
 6. **Read reference files** — load all 5 reference files from `${CLAUDE_SKILL_DIR}/references/`
 7. **Lighthouse** — launch the `lighthouse-runner` subagent in the background with the domain URL. It runs `${CLAUDE_SKILL_DIR}/scripts/lighthouse.sh` and returns JSON with performance/accessibility/seo/best-practices scores and Core Web Vitals (LCP, CLS, TBT). No API key needed. Collect results before Phase C begins. If it fails, mark CWV checks as UNTESTABLE and continue.
 
@@ -119,21 +119,38 @@ Which pages should I audit? Pick from above or say "recommended".
 
 Wait for user selection before proceeding to Phase C. Cap "recommended" at 4 pages (1 per unique template type, homepage always included).
 
-#### Phase C: Crawl selected pages (sequential, reuse browser session)
+#### Phase C: Crawl selected pages (parallel via `browser_run_code`)
 
-**IMPORTANT:** Crawl pages one at a time in the main thread. Do NOT use background agents or parallel tasks for browser navigation — Playwright MCP shares a single browser instance, and concurrent navigations cause stale DOM reads (confirmed in first audit run).
+Use `browser_run_code` to crawl all selected pages in parallel within a single call. This opens concurrent tabs via `page.context().newPage()` and runs the extraction function on each.
 
-For each user-selected page:
-1. `navigate_page` to URL (reuses existing browser tab -- never use `new_page`)
-2. `evaluate_script` with the JS extraction function from modules/extraction.js
-3. Do NOT take snapshots or screenshots during crawl -- the extraction function captures all needed data
-4. Continue to the next page immediately after extraction completes
+Read `${CLAUDE_SKILL_DIR}/modules/extraction.js` and inline the function body into the script below.
+
+```javascript
+async (page) => {
+  const context = page.context();
+  const urls = [/* user-selected URLs */];
+  const results = await Promise.all(urls.map(async (url) => {
+    const p = await context.newPage();
+    await p.goto(url, { waitUntil: 'domcontentloaded' });
+    const data = await p.evaluate(() => { /* extraction.js body here */ });
+    await p.close();
+    return data;
+  }));
+  return results;
+}
+```
+
+If any individual page fails to load, catch the error and return `{ url, error: message }` for that page. Mark that page's checks as UNTESTABLE and continue with the rest.
+
+Do NOT take snapshots or screenshots during crawl — the extraction function captures all needed data.
 
 ### 1.1 JS Extraction Function
 
-Read `${CLAUDE_SKILL_DIR}/modules/extraction.js`. Run this exact function (or a superset of it) via a single `evaluate_script` call on every page. Do not extract metadata piecemeal across multiple calls.
+Read `${CLAUDE_SKILL_DIR}/modules/extraction.js`. This function is used in two places:
+- **Phase A homepage**: passed directly to `browser_evaluate` as a single call
+- **Phase C parallel crawl**: inlined into the `browser_run_code` script's `p.evaluate()` call
 
-**IMPORTANT:** The function must be an arrow function, NOT an IIFE -- Playwright MCP rejects self-invoking functions.
+Do not extract metadata piecemeal across multiple calls.
 
 ### 2. Load Rules
 

@@ -12,7 +12,7 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that audit
 
 You say `audit example.com` and Claude:
 
-1. **Crawls** the site -- fetches technical files (robots.txt, sitemap, llms.txt) via curl, runs Lighthouse locally for performance scores, and navigates pages via Playwright
+1. **Crawls** the site -- fetches technical files (robots.txt, sitemap, llms.txt) via curl, runs Lighthouse locally for performance scores, and navigates pages via Playwright CLI (parallel headless tabs)
 2. **Selects pages** -- classifies discovered URLs by template type (homepage, about, blog-listing, blog-post, product, FAQ, etc.) and lets you choose which 3-4 to audit
 3. **Analyzes AI crawler policy** -- grades your robots.txt strategy for AI bots (training vs retrieval), reports which bots are allowed/blocked/unaddressed
 4. **Checks** every page against research-backed rules in each category
@@ -84,7 +84,7 @@ cp -r website-audit-tool ~/.claude/skills/website-audit
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
-- [Playwright MCP](https://github.com/anthropics/claude-code/blob/main/docs/mcp.md) configured in Claude Code (for site crawling)
+- [Playwright CLI](https://github.com/anthropics/claude-code/blob/main/docs/mcp.md) plugin for Claude Code (for site crawling with parallel headless tabs)
 - Node.js 22+ with npx (for Lighthouse CLI)
 - Python 3 (for deterministic scoring engine)
 

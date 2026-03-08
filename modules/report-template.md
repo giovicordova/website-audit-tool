@@ -116,7 +116,7 @@ Audit log template:
 ## Timing
 - Phase A (parallel technical + homepage): ~{N}s
 - Phase B (page discovery): ~{N}s
-- Phase C (sequential page crawl): ~{N}s ({N} pages)
+- Phase C (parallel page crawl): ~{N}s ({N} pages)
 - Phase D (blog post): ~{N}s | skipped ({reason})
 - Analysis + scoring: ~{N}s
 - Report writing: ~{N}s

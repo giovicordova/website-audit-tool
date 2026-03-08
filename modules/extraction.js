@@ -1,9 +1,6 @@
 // JS Extraction Function for Website Audit Skill
-// Used by SKILL.md via evaluate_script on every crawled page.
-// IMPORTANT: This MUST be an arrow function, NOT an IIFE.
-// Playwright MCP rejects self-invoking functions.
-
-// Pass as arrow function, NOT IIFE -- Playwright MCP rejects self-invoking functions
+// Used by SKILL.md via browser_evaluate (homepage) and browser_run_code (parallel crawl).
+// Arrow function format — passed to Playwright's page.evaluate().
 () => {
   const title = document.title || '';
   const metaDesc = document.querySelector('meta[name="description"]');
