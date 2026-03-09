@@ -85,10 +85,12 @@ If citation check was skipped or failed, replace the entire section with:
 `SKIPPED — {reason}` (e.g., "PERPLEXITY_API_KEY not set" or "API request failed")
 
 ## Fix Priority List
-1. {red_circle} {highest_impact_fix}
-2. {red_circle} {next_fix}
-3. {yellow_circle} {warning_fix}
+- [ ] {red_circle} {highest_impact_fix}
+- [ ] {red_circle} {next_fix}
+- [ ] {yellow_circle} {warning_fix}
 ...
+
+> After implementing fixes, update this file: `- [ ]` → `- [x]`
 ```
 
 Order the fix priority list by: critical fails first (sorted by impact), then warnings, then nice-to-haves. Use red circle for critical, yellow circle for important, green circle for nice to have.

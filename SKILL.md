@@ -245,3 +245,26 @@ If only some categories were audited, weight proportionally across those.
 ### 5. Report and Compare Mode
 
 Read `${CLAUDE_SKILL_DIR}/modules/report-template.md`. Follow the exact format for both single-site audits and compare mode. Do not improvise sections or reorder categories.
+
+### 6. Offer to Implement Fixes
+
+After presenting the conversational summary and saving the report, check whether the audited site's codebase is in the current working directory. Look for signals: domain match in `package.json` homepage/name field, config files referencing the domain (e.g., `next.config.*`, `nuxt.config.*`, `astro.config.*`, `.env*`), or deployment config pointing to the domain.
+
+**If the codebase is detected locally:**
+
+Ask the user:
+
+*"The report has {N} fixes prioritized by impact. Want me to work through them?"*
+
+If the user says **no**, end. The report stands on its own.
+
+If the user says **yes**:
+
+1. Work through each checkbox item in the Fix Priority List, starting from the top (highest impact first).
+2. After completing each fix, update the report file — change `- [ ]` to `- [x]` for that item.
+3. Skip fixes that require access to external systems (DNS, hosting config, CDN settings) — leave them unchecked and note why.
+4. When done, show a brief summary of what was fixed and what remains.
+
+**If the codebase is NOT detected locally:**
+
+Do not offer to implement. The fix list with checkboxes is still useful as a manual tracking sheet.
