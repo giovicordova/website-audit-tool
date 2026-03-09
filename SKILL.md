@@ -3,9 +3,9 @@ name: website-audit
 argument-hint: "[domain] [categories...]"
 allowed-tools: Read, Bash, Write, Glob, Grep, mcp__plugin_playwright_playwright__*
 description: >
-  Audit any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization).
-  Use this skill when the user asks to audit a website, check SEO/AEO/GEO, analyze a site's search readiness,
-  or compare multiple sites. Triggers on phrases like "audit example.com", "check SEO for",
+  Audits any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization).
+  Triggers when the user asks to audit a website, check SEO/AEO/GEO, analyze a site's search readiness,
+  or compare multiple sites. Matches phrases like "audit example.com", "check SEO for",
   "how does my site score", "compare these sites", or any request to evaluate a website's
   optimization for traditional and AI search engines.
 ---
