@@ -32,6 +32,7 @@ modules/
 references/
   aeo.md                        # Answer Engine Optimization checks
   geo.md                        # Generative Engine Optimization checks
+  indexability.md               # Indexability checks (scored under SEO Technical)
   seo-technical.md              # Technical SEO checks (uses Lighthouse CLI)
   seo-on-page.md                # On-Page SEO checks
   structured-data.md            # Structured Data checks
@@ -50,3 +51,7 @@ tests/
   hooks/validate-report-name.sh # Enforces report naming convention
   settings.json                 # Permission allowlist and hook config
 ```
+
+## Companion Tools
+
+For full GSC URL Inspection data (index status, crawl history, Google-selected canonical), install [mcp-gsc](https://github.com/AminForou/mcp-gsc) as a companion MCP server.

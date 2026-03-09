@@ -80,6 +80,9 @@ Fire all of these in a single parallel batch:
    f. This grade is **informational only** — it is NOT part of the weighted overall score.
 
 2. **curl sitemap.xml** — `curl -sL {domain}/sitemap.xml` — parse URLs from `<loc>` tags
+
+2b. **Sitemap URL health spot-check** — After parsing sitemap URLs from step 2, sample up to 20 URLs (evenly spaced if more than 20). Run `curl -sI {url}` in parallel for each sampled URL. Record which URLs return non-200 status codes. This data feeds the "sitemap URLs return 200" indexability check.
+
 3. **curl llms.txt** — `curl -sI {domain}/llms.txt` — check HTTP status only (200 = exists)
 4. **curl 404 test** — `curl -sI {domain}/nonexistent-page-404-test` — verify proper 404 status
 5. **Playwright homepage** — `browser_navigate` to {domain}, then `browser_evaluate` with the JS extraction function (see Section 1.1)
@@ -137,14 +140,28 @@ async (page) => {
   const urls = [/* user-selected URLs */];
   const results = await Promise.all(urls.map(async (url) => {
     const p = await context.newPage();
-    await p.goto(url, { waitUntil: 'domcontentloaded' });
+    const response = await p.goto(url, { waitUntil: 'domcontentloaded' });
+    const httpStatus = response ? response.status() : 0;
+    const headers = response ? await response.allHeaders() : {};
+    const xRobotsTag = headers['x-robots-tag'] || null;
+    const finalUrl = p.url();
+    let redirectCount = 0;
+    if (response) {
+      let req = response.request();
+      while (req.redirectedFrom()) {
+        redirectCount++;
+        req = req.redirectedFrom();
+      }
+    }
     const data = await p.evaluate(() => { /* extraction.js body here */ });
     await p.close();
-    return data;
+    return { ...data, httpStatus, xRobotsTag, finalUrl, redirectCount };
   }));
   return results;
 }
 ```
+
+The crawl captures response metadata (HTTP status, headers, redirect chain) from Playwright's response object. This data powers the indexability checks without extra network requests.
 
 If any individual page fails to load, catch the error and return `{ url, error: message }` for that page. Mark that page's checks as UNTESTABLE and continue with the rest.
 
@@ -166,6 +183,7 @@ Read the reference files for the requested categories:
 - `${CLAUDE_SKILL_DIR}/references/seo-technical.md` — Technical SEO
 - `${CLAUDE_SKILL_DIR}/references/seo-on-page.md` — On-Page SEO
 - `${CLAUDE_SKILL_DIR}/references/structured-data.md` — Structured Data
+- `${CLAUDE_SKILL_DIR}/references/indexability.md` — Indexability (scored under SEO Technical)
 
 Only read the files for categories being audited.
 

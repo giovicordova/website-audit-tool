@@ -6,6 +6,8 @@
   const metaDesc = document.querySelector('meta[name="description"]');
   const canonical = document.querySelector('link[rel="canonical"]');
   const viewport = document.querySelector('meta[name="viewport"]');
+  const robotsMeta = document.querySelector('meta[name="robots"]');
+  const googlebotMeta = document.querySelector('meta[name="googlebot"]');
 
   // JSON-LD blocks
   const jsonLdScripts = [...document.querySelectorAll('script[type="application/ld+json"]')];
@@ -138,6 +140,8 @@
     metaDescriptionLength: metaDesc ? metaDesc.content.length : 0,
     viewport: viewport ? viewport.content : null,
     canonical: canonical ? canonical.href : null,
+    robotsMeta: robotsMeta ? robotsMeta.content : null,
+    googlebotMeta: googlebotMeta ? googlebotMeta.content : null,
     jsonLd,
     headings,
     h1Text: h1Elements.length > 0 ? h1Elements[0].textContent.trim() : null,

@@ -21,8 +21,6 @@ Last reviewed: 2026-03-05
 - [ ] No duplicate title tags across pages
 - [ ] No duplicate meta descriptions across pages
 - [ ] Pages load in under 3 seconds (Lighthouse performance score >= 50) — **CONDITIONAL: if Lighthouse fails, mark as UNTESTABLE and exclude from score denominator.**
-- [ ] No redirect chains (direct 301/302 only, no chains of 3+)
-
 ### NICE TO HAVE
 - [ ] llms.txt file exists at /llms.txt (new standard — like robots.txt but for AI crawlers, tells AI models where best content is; 844K+ sites have adopted it including Anthropic, Cloudflare, Stripe)
 - [ ] Lighthouse performance score >= 90 — **CONDITIONAL: if Lighthouse fails, mark as UNTESTABLE and exclude from score denominator.**
