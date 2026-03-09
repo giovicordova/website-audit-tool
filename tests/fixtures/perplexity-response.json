@@ -1,0 +1,17 @@
+{
+  "id": "test-123",
+  "model": "sonar",
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "Example.com is a domain reserved for illustrative purposes in documents and examples."
+      }
+    }
+  ],
+  "citations": [
+    "https://example.com/about",
+    "https://wikipedia.org/wiki/Example.com",
+    "https://example.com/faq"
+  ]
+}

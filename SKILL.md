@@ -1,7 +1,9 @@
 ---
 name: website-audit
+context: fork
+disable-model-invocation: true
 argument-hint: "[domain] [categories...]"
-allowed-tools: Read, Bash, Write, Glob, Grep, mcp__plugin_playwright_playwright__*, Agent(lighthouse-runner)
+allowed-tools: Read, Bash, Write, Glob, Grep, Agent(lighthouse-runner), Agent(perplexity-checker), mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_evaluate, mcp__plugin_playwright_playwright__browser_run_code
 description: >
   Audits any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization).
   Triggers when the user asks to audit a website, check SEO/AEO/GEO, analyze a site's search readiness,
@@ -21,6 +23,9 @@ The user will say something like:
 - "compare site-a.com site-b.com" — side-by-side comparison
 
 Default: all 5 categories, homepage + 3-4 pages selected by template diversity (user chooses).
+
+**Optional flags:**
+- `+citations` — Run Perplexity citation verification (requires `PERPLEXITY_API_KEY`). Advisory only, does not affect score.
 
 ## Audit Flow
 
@@ -80,6 +85,7 @@ Fire all of these in a single parallel batch:
 5. **Playwright homepage** — `browser_navigate` to {domain}, then `browser_evaluate` with the JS extraction function (see Section 1.1)
 6. **Read reference files** — load all 5 reference files from `${CLAUDE_SKILL_DIR}/references/`
 7. **Lighthouse** — launch the `lighthouse-runner` subagent in the background with the domain URL. It runs `${CLAUDE_SKILL_DIR}/scripts/lighthouse.sh` and returns JSON with performance/accessibility/seo/best-practices scores and Core Web Vitals (LCP, CLS, TBT). No API key needed. Collect results before Phase C begins. If it fails, mark CWV checks as UNTESTABLE and continue.
+8. **Perplexity citation check** *(only if `+citations` was requested)* — Check that `PERPLEXITY_API_KEY` is set in the environment. If missing, warn the user ("Skipping citation check — PERPLEXITY_API_KEY not set") and continue without it. If set, launch the `perplexity-checker` subagent in the background with the domain and a summary of the homepage content (title, meta description, key heading topics). Collect results before Phase C begins alongside Lighthouse.
 
 #### Phase B: Discover and classify pages
 

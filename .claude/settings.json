@@ -6,7 +6,13 @@
       "Bash(scripts/lighthouse.sh *)",
       "Bash(python scripts/score.py *)",
       "Bash(python3 scripts/score.py *)",
-      "Bash(tests/test-*)"
+      "Bash(tests/test-*)",
+      "Bash(scripts/perplexity-check.sh *)"
+    ],
+    "deny": [
+      "Bash(curl * -X POST *)",
+      "Bash(curl * --upload-file *)",
+      "Bash(curl * -T *)"
     ]
   },
   "hooks": {

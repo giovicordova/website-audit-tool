@@ -68,6 +68,22 @@ Top priority: {highest_impact_fix}.
 ## Structured Data ({score}/100)
 ...
 
+## AI Citation Verification *(only if +citations was requested)*
+
+> Advisory only — not included in the overall score.
+
+**Citation Rate: {rate}**
+
+| Query | Cited? | Sources |
+|-------|--------|---------|
+| {query} | Yes/No | {urls} |
+
+### Interpretation
+{summary}
+
+If citation check was skipped or failed, replace the entire section with:
+`SKIPPED — {reason}` (e.g., "PERPLEXITY_API_KEY not set" or "API request failed")
+
 ## Fix Priority List
 1. {red_circle} {highest_impact_fix}
 2. {red_circle} {next_fix}
