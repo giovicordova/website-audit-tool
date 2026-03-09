@@ -1,7 +1,7 @@
 ---
 name: website-audit
 argument-hint: "[domain] [categories...]"
-allowed-tools: Read, Bash, Write, Glob, Grep, mcp__plugin_playwright_playwright__*
+allowed-tools: Read, Bash, Write, Glob, Grep, mcp__plugin_playwright_playwright__*, Agent(lighthouse-runner)
 description: >
   Audits any website for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization).
   Triggers when the user asks to audit a website, check SEO/AEO/GEO, analyze a site's search readiness,

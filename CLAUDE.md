@@ -23,4 +23,26 @@ tests/test-scoring.sh             # Golden-file scoring regression (6 assertions
 
 ## File Structure
 
-@README.md
+```
+SKILL.md                        # Orchestration logic (how Claude runs the audit)
+modules/
+  extraction.js                 # JS function run on each page via Playwright
+  report-template.md            # Report and compare mode formatting
+references/
+  aeo.md                        # Answer Engine Optimization checks
+  geo.md                        # Generative Engine Optimization checks
+  seo-technical.md              # Technical SEO checks (uses Lighthouse CLI)
+  seo-on-page.md                # On-Page SEO checks
+  structured-data.md            # Structured Data checks
+scripts/
+  lighthouse.sh                 # Local Lighthouse CLI wrapper (no API key needed)
+  score.py                      # Deterministic scoring engine
+tests/
+  test-lighthouse-output.sh     # Lighthouse JSON shape validation (13 assertions)
+  test-scoring.sh               # Golden-file scoring regression tests (6 assertions)
+  fixtures/                     # Synthetic test data (not real site snapshots)
+.claude/
+  agents/lighthouse-runner.md   # Background subagent for parallel Lighthouse runs
+  hooks/validate-report-name.sh # Enforces report naming convention
+  settings.json                 # Permission allowlist and hook config
+```

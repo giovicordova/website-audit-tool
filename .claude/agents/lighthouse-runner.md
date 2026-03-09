@@ -1,6 +1,7 @@
 ---
 name: lighthouse-runner
-description: Runs Lighthouse CLI and returns compact performance scores + Core Web Vitals. Use proactively during website audits.
+model: haiku
+description: Runs Lighthouse CLI and returns performance scores + Core Web Vitals. Launched by the website-audit skill during audits.
 tools: Bash, Read
 background: true
 ---
