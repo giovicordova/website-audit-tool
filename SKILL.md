@@ -26,6 +26,92 @@ Default: all 5 categories, homepage + 3-4 pages selected by template diversity (
 
 **Optional flags:**
 - `+citations` — Run Perplexity citation verification (requires `PERPLEXITY_API_KEY`). Advisory only, does not affect score.
+- `+refresh` — Search the web for latest SEO/AEO/GEO best practices and propose updates to reference files before running the audit. See Section 0 below.
+- `+benchmark <domain>` — Crawl a benchmark site alongside the target for structural comparison. See Section 0.2 below.
+
+## Pre-Audit: Reference Refresh (Section 0)
+
+This section runs **only** when `+refresh` is requested OR when any reference file's `Last reviewed` date is more than 30 days old.
+
+### 0.1 Auto-Refresh Reference Rules
+
+For each reference file in `${CLAUDE_SKILL_DIR}/references/` that has a `Last reviewed` date:
+
+1. **Check staleness** — if the file's `Last reviewed` date is within 30 days AND `+refresh` was NOT explicitly requested, skip that file.
+
+2. **Search the web** for the latest best practices relevant to that file's category. Use these search targets:
+
+   | File | Search queries |
+   |---|---|
+   | aeo.md | "AI citation best practices {year}", "how to get cited by ChatGPT Perplexity {year}" |
+   | geo.md | "Google E-E-A-T updates {year}", "AI Overview citation factors", "GEO optimization {year}" |
+   | seo-technical.md | "Google Search Central updates {year}", "Core Web Vitals changes", "new Lighthouse audits" |
+   | seo-on-page.md | "on-page SEO best practices {year}", "Google ranking factors update" |
+   | structured-data.md | "schema.org deprecated types {year}", "Google rich results changes {year}", "new JSON-LD types" |
+   | indexability.md | "Google indexing changes {year}", "GSC coverage report updates" |
+   | ai-bots.md | "new AI crawler bots {year}", "AI bot robots.txt {year}" |
+
+   Replace `{year}` with the current year.
+
+3. **Compare findings** against the current file content. Look for:
+   - New checks that should be added (new research, new Google requirements)
+   - Existing checks that are outdated (deprecated features, changed thresholds)
+   - New data points or statistics to update (citation rates, study results)
+
+4. **Present a diff to the user** showing proposed changes:
+   ```
+   Reference refresh for {filename}:
+
+   + ADD: {new check description} (SEVERITY) — Source: {url}
+   ~ UPDATE: {existing check} — {what changed} — Source: {url}
+   - REMOVE: {outdated check} — {reason}
+
+   Apply these changes? [y/N]
+   ```
+
+5. **If confirmed**, apply changes to the file:
+   - Update checks in the appropriate severity section
+   - Bump `Last reviewed: {today's date}`
+   - Append a changelog entry:
+     ```
+     ### {YYYY-MM-DD}
+     - Added: {description} — Source: {url}
+     - Updated: {description}
+     - Removed: {description}
+     ```
+   - If the file has a `## Required Extraction Fields` section, verify new checks don't require fields not in extraction.js. If they do, flag this: "Warning: new check requires `{field}` which extraction.js doesn't capture. The check will be added but may not be fully automated."
+
+6. **If declined**, skip that file and continue.
+
+**Guard rails:**
+- Cap to 3 web searches per file (avoid rate limiting)
+- Total refresh should complete in <60 seconds
+- Never silently modify files — always show changes and ask
+
+### 0.2 Benchmark Comparison
+
+When `+benchmark` is requested (with or without a specific domain):
+
+1. **Select benchmark site:**
+   - If user specified one: `+benchmark stripe.com` → use that domain
+   - If not: auto-select based on the target site's detected category:
+
+     | Site category signals | Recommended benchmark |
+     |---|---|
+     | SaaS / software (Product schema, /pricing page) | stripe.com |
+     | Content / blog / media | nerdwallet.com |
+     | E-commerce (Product schema, /shop) | amazon.com |
+     | Documentation / developer | docs.github.com |
+     | Healthcare | mayoclinic.org |
+     | Default / unknown | hubspot.com |
+
+   Category detection uses the target site's JSON-LD `@type` values and URL patterns from Phase B.
+
+2. **Crawl 1 page** from the benchmark site using the same extraction.js (homepage only — minimizes load on third-party sites).
+
+3. **Compare structural patterns** and include a "Benchmark Comparison" section in the report (see report-template.md for format).
+
+4. **This is advisory only** — benchmark data does not affect the numerical score.
 
 ## Audit Flow
 
@@ -39,45 +125,20 @@ Fire all of these in a single parallel batch:
 
    **AI Crawler Policy Analysis** — Using the robots.txt content from step 1, analyze AI bot rules:
 
-   a. Check the following canonical AI bot list against the robots.txt:
+   a. Read the canonical AI bot list from `${CLAUDE_SKILL_DIR}/references/ai-bots.md`. This file contains Training Bots, Retrieval Bots, legacy name mappings, and strategy grading criteria.
 
-   | Provider | Bot Name | Type | Purpose |
-   |----------|----------|------|---------|
-   | OpenAI | GPTBot | Training | Collects data for model training |
-   | OpenAI | OAI-SearchBot | Retrieval | Real-time search indexing |
-   | OpenAI | ChatGPT-User | Retrieval | Fetches pages during conversations |
-   | Anthropic | ClaudeBot | Training | Collects data for Claude training |
-   | Anthropic | Claude-SearchBot | Retrieval | Indexes content for search |
-   | Anthropic | Claude-User | Retrieval | Fetches pages during conversations |
-
-   > **Note:** Some sites use the legacy name "Claude-Web" for this bot. Treat "Claude-Web" as equivalent to "Claude-User" when classifying.
-
-   | Google | Google-Extended | Training | Training data for Gemini/Bard |
-   | Google | GoogleOther | Training | Additional Google AI training |
-   | Perplexity | PerplexityBot | Retrieval | Indexes for answer engine |
-   | Perplexity | Perplexity-User | Retrieval | Real-time page fetching |
-   | Apple | Applebot-Extended | Training | Extended Apple AI training |
-   | Meta | Meta-ExternalAgent | Training | Meta AI training data |
-   | Amazon | Amazonbot | Retrieval | Alexa/Amazon search |
-   | ByteDance | Bytespider | Training | TikTok/ByteDance AI training |
-
-   b. For each bot, classify as:
+   b. For each bot in the list, classify as:
       - **Blocked**: Has its own `User-agent` section with `Disallow: /`, OR falls under `User-agent: *` with `Disallow: /` and has NO specific override
       - **Allowed**: Has its own `User-agent` section without `Disallow: /`, OR has an explicit `Allow` directive, OR no blocking rule applies
       - **Unaddressed**: Not mentioned in robots.txt at all (no specific rule, no wildcard coverage)
 
    c. **IMPORTANT — Precedence rule:** Specific `User-agent` rules override wildcard (`*`) rules. A bot with its own `User-agent` section is governed by that section only, NOT by the `*` section.
 
-   d. Also check for any `User-agent` entries containing "AI", "bot", "crawler", "spider" that are NOT in the canonical list — report these as "Other AI bots detected."
+   d. Check the Legacy Names table in the reference file — treat legacy names as equivalent to current names when classifying.
 
-   e. Grade the strategy:
-      - **A**: Training bots blocked, retrieval bots allowed, no major bots unaddressed
-      - **B**: Most bots addressed, 1-2 unaddressed
-      - **C**: Some bots addressed but significant gaps or inconsistencies
-      - **D**: Only 1-2 bots addressed, most unaddressed
-      - **F**: No AI bot rules in robots.txt at all
+   e. Also check for any `User-agent` entries containing "AI", "bot", "crawler", "spider" that are NOT in the canonical list — report these as "Other AI bots detected."
 
-   f. This grade is **informational only** — it is NOT part of the weighted overall score.
+   f. Grade the strategy using the criteria in the reference file's Strategy Grading table.
 
 2. **curl sitemap.xml** — `curl -sL {domain}/sitemap.xml` — parse URLs from `<loc>` tags
 
@@ -184,30 +245,33 @@ Read the reference files for the requested categories:
 - `${CLAUDE_SKILL_DIR}/references/seo-on-page.md` — On-Page SEO
 - `${CLAUDE_SKILL_DIR}/references/structured-data.md` — Structured Data
 - `${CLAUDE_SKILL_DIR}/references/indexability.md` — Indexability (scored under SEO Technical)
+- `${CLAUDE_SKILL_DIR}/references/ai-bots.md` — AI crawler bot list (always loaded for Phase A analysis)
 
-Only read the files for categories being audited.
+Only read the category-specific files for categories being audited. Always load `ai-bots.md` since the AI crawler policy analysis runs in every audit.
 
 ### 2.1 Check Reference File Freshness
 
 After loading the reference files above, check the `Last reviewed: YYYY-MM-DD` date in each loaded file. Compare each date against the current date.
 
-If ANY file's last-reviewed date is more than 90 days ago, print this warning BEFORE proceeding to step 3:
+If ANY file's last-reviewed date is more than 30 days ago:
+
+1. If `+refresh` was requested, the pre-audit refresh (Section 0.1) should have already handled these files. Print a note and continue.
+
+2. If `+refresh` was NOT requested, print this warning BEFORE proceeding to step 3:
 
 ```
-Warning: {N} reference file(s) are stale (>90 days since last review):
+Warning: {N} reference file(s) are stale (>30 days since last review):
   - references/{file}.md — last reviewed {date} ({days} days ago)
 
 Audit results may not reflect current best practices.
-Consider reviewing these files to ensure rules are up to date.
+Run with +refresh to update rules, or review files manually.
 
 Proceeding with audit...
 ```
 
-> **Testing note:** The staleness warning path (>90 days) has not been exercised in production since reference files are regularly updated. Manually test by temporarily backdating a reference file's `Last reviewed` date.
-
 This is informational only — do NOT ask for confirmation, do NOT stop the audit. Print the warning and continue.
 
-If all files are within 90 days, say nothing — no "all files are fresh" message.
+If all files are within 30 days, say nothing — no "all files are fresh" message.
 
 ### 3. Check Each Category
 
@@ -218,21 +282,36 @@ For each category, go through every check in the reference file. For each check:
 
 ### 4. Score
 
-For each category:
-- Critical checks: 3 points each
-- Important checks: 2 points each
-- Nice to Have checks: 1 point each
-- PASS = full points, WARNING = half points (rounded down), FAIL = 0 points
-- Score = (points earned / points possible) * 100
+Collect all check results into a JSON structure and pipe to `${CLAUDE_SKILL_DIR}/scripts/score.py`:
 
-Overall grade (weighted):
-- AEO: 25%
-- GEO: 25%
-- SEO Technical: 20%
-- SEO On-Page: 15%
-- Structured Data: 15%
+```json
+{
+  "categories": {
+    "aeo": {"checks": [{"severity": "critical", "result": "PASS"}, ...]},
+    "geo": {"checks": [...]},
+    "seo_technical": {"checks": [...]},
+    "seo_on_page": {"checks": [...]},
+    "structured_data": {"checks": [...]}
+  }
+}
+```
 
-Letter grade: A+ (95+), A (90+), A- (85+), B+ (80+), B (75+), B- (70+), C+ (65+), C (60+), C- (55+), D (50+), F (<50)
+Valid severity values: `critical`, `important`, `nice_to_have`
+Valid result values: `PASS`, `WARNING`, `FAIL`, `N/A`, `UNTESTABLE`
+
+Run: `echo '<json>' | python3 ${CLAUDE_SKILL_DIR}/scripts/score.py`
+
+The script returns JSON with per-category scores, the weighted overall score, and the letter grade:
+
+```json
+{
+  "categories": {"aeo": {"score": 77, "weight": 25}, ...},
+  "overall": 77,
+  "grade": "B"
+}
+```
+
+The scoring formula, category weights, and grade thresholds are all defined in `score.py`. Do NOT compute scores or grades in-prompt — always use the script to ensure deterministic results.
 
 **Handling N/A and UNTESTABLE checks:**
 - If a check is marked **CONDITIONAL** in the reference file and the condition doesn't apply, mark it **N/A**
@@ -240,7 +319,7 @@ Letter grade: A+ (95+), A (90+), A- (85+), B+ (80+), B (75+), B- (70+), C+ (65+)
 - UNTESTABLE checks (e.g., PageSpeed API quota exceeded) are also excluded from the denominator
 - Always note which checks were N/A or UNTESTABLE in the report
 
-If only some categories were audited, weight proportionally across those.
+If only some categories were audited, include only those in the JSON. The script redistributes weights proportionally.
 
 ### 5. Report and Compare Mode
 

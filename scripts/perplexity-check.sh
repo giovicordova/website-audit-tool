@@ -1,24 +1,32 @@
 #!/bin/bash
 # Usage: perplexity-check.sh <query> <domain>
-# Returns: JSON with answer snippet, citations, and domain_cited boolean
+# Returns: JSON on stdout with answer snippet, citations, and domain_cited boolean
+# On error: JSON with "error" key on stdout, exit 1
 # Requires PERPLEXITY_API_KEY env var.
+
+set -euo pipefail
 
 QUERY="$1"
 DOMAIN="$2"
 
 if [ -z "$QUERY" ] || [ -z "$DOMAIN" ]; then
-  echo '{"error": "Usage: perplexity-check.sh <query> <domain>"}' >&2
+  echo '{"error": "Usage: perplexity-check.sh <query> <domain>"}'
   exit 1
 fi
 
-if [ -z "$PERPLEXITY_API_KEY" ]; then
-  echo '{"error": "PERPLEXITY_API_KEY not set"}' >&2
+if [ -z "${PERPLEXITY_API_KEY:-}" ]; then
+  echo '{"error": "PERPLEXITY_API_KEY not set"}'
   exit 1
 fi
 
-# Check jq is available
+# Dependency checks
 if ! command -v jq &>/dev/null; then
-  echo '{"error": "jq is required but not installed"}' >&2
+  echo '{"error": "jq not found — install jq"}'
+  exit 1
+fi
+
+if ! command -v curl &>/dev/null; then
+  echo '{"error": "curl not found"}'
   exit 1
 fi
 
@@ -36,7 +44,7 @@ HTTP_CODE=$(echo "$RESPONSE" | tail -1)
 BODY=$(echo "$RESPONSE" | sed '$d')
 
 if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
-  echo "{\"error\": \"HTTP $HTTP_CODE\", \"body\": $(echo "$BODY" | jq -R -s '.')}" >&2
+  echo "{\"error\": \"HTTP $HTTP_CODE\", \"body\": $(echo "$BODY" | jq -R -s '.')}"
   exit 1
 fi
 

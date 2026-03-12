@@ -1,0 +1,42 @@
+{
+  "categories": {
+    "aeo": {
+      "checks": [
+        {"severity": "critical", "result": "PASS"},
+        {"severity": "critical", "result": "PASS"},
+        {"severity": "important", "result": "FAIL"},
+        {"severity": "nice_to_have", "result": "PASS"}
+      ]
+    },
+    "geo": {
+      "checks": [
+        {"severity": "critical", "result": "PASS"},
+        {"severity": "important", "result": "PASS"},
+        {"severity": "important", "result": "WARNING"},
+        {"severity": "nice_to_have", "result": "FAIL"}
+      ]
+    },
+    "seo_technical": {
+      "checks": [
+        {"severity": "critical", "result": "PASS"},
+        {"severity": "critical", "result": "PASS"},
+        {"severity": "important", "result": "PASS"},
+        {"severity": "nice_to_have", "result": "N/A"}
+      ]
+    },
+    "seo_on_page": {
+      "checks": [
+        {"severity": "critical", "result": "PASS"},
+        {"severity": "important", "result": "PASS"},
+        {"severity": "nice_to_have", "result": "WARNING"}
+      ]
+    },
+    "structured_data": {
+      "checks": [
+        {"severity": "critical", "result": "FAIL"},
+        {"severity": "important", "result": "PASS"},
+        {"severity": "nice_to_have", "result": "PASS"}
+      ]
+    }
+  }
+}

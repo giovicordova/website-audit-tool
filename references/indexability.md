@@ -35,3 +35,23 @@ Scored under **SEO Technical** (not a separate category).
 ### NICE TO HAVE
 - [ ] Sitemap URLs do not redirect (`finalUrl` matches the original sitemap URL — redirecting sitemap entries should be updated)
 - [ ] No conflicting robots directives (meta robots tag and X-Robots-Tag header should not give contradictory instructions, e.g., one says "index" while the other says "noindex")
+
+## Required Extraction Fields
+- robotsMeta — "No noindex meta tag" check
+- googlebotMeta — "No noindex meta tag" (googlebot-specific) check
+- xRobotsTag — "No X-Robots-Tag noindex" check (from Playwright response headers, not extraction.js)
+- httpStatus — "Soft 404 detection" check (from Playwright response, not extraction.js)
+- bodyWordCount — "Soft 404 detection" (pages with <50 words) check
+- canonical — "Canonical self-referencing", "Canonical target returns 200" checks
+- finalUrl — "Sitemap URLs do not redirect" check (from Playwright response, not extraction.js)
+- redirectCount — "No excessive redirect chains" check (from Playwright response, not extraction.js)
+
+## Changelog
+
+### 2026-03-09
+- Split from seo-technical.md into dedicated file
+- Added soft 404 detection, canonical validation, redirect chain checks
+- Defined data source mapping to extraction.js fields
+
+### 2026-03-05
+- Initial indexability checks (inline in seo-technical.md)

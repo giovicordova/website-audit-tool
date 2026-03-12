@@ -3,9 +3,7 @@
 # Runs in <2 seconds. No live API call needed.
 
 set -euo pipefail
-
-PASS=0
-FAIL=0
+source "$(dirname "$0")/lib/assert.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -22,17 +20,6 @@ if ! command -v jq &>/dev/null; then
   echo "ABORT: jq is required but not installed" >&2
   exit 1
 fi
-
-assert_eq() {
-  local label="$1" expected="$2" actual="$3"
-  if [[ "$expected" == "$actual" ]]; then
-    echo "PASS: $label"
-    PASS=$((PASS + 1))
-  else
-    echo "FAIL: $label (expected=$expected, actual=$actual)"
-    FAIL=$((FAIL + 1))
-  fi
-}
 
 # Apply the same jq filter used in perplexity-check.sh to the fixture
 RESULT=$(cat "$FIXTURE" | jq --arg domain "example.com" '{
@@ -77,6 +64,4 @@ RESULT_MISSING=$(echo '{"choices":[{"message":{"content":"test"}}]}' | jq --arg 
 assert_eq "missing citations key = false" "false" "$(echo "$RESULT_MISSING" | jq '.domain_cited')"
 
 # Summary
-echo ""
-echo "$PASS passed, $FAIL failed"
-[[ $FAIL -eq 0 ]] && exit 0 || exit 1
+test_summary

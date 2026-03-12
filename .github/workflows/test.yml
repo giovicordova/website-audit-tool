@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Install jsdom for extraction tests
+        run: npm install --no-save jsdom
+
+      - name: Make scripts executable
+        run: |
+          chmod +x tests/*.sh tests/lib/*.sh scripts/*.sh
+
+      - name: Lighthouse output tests (13 assertions)
+        run: tests/test-lighthouse-output.sh
+
+      - name: Scoring tests (17 assertions)
+        run: tests/test-scoring.sh
+
+      - name: Perplexity output tests (8 assertions)
+        run: tests/test-perplexity-output.sh
+
+      - name: Field coverage tests (39 assertions)
+        run: tests/test-field-coverage.sh
+
+      - name: Extraction tests (51 assertions)
+        run: tests/test-extraction.sh

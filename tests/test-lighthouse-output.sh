@@ -3,9 +3,8 @@
 # Runs in <2 seconds. No live Lighthouse audit needed.
 
 set -euo pipefail
+source "$(dirname "$0")/lib/assert.sh"
 
-PASS=0
-FAIL=0
 MOCK_FILE="/tmp/test-lighthouse-mock-$$.json"
 
 # Clean up on exit
@@ -24,17 +23,6 @@ if ! command -v jq &>/dev/null; then
   echo "ABORT: jq is required but not installed" >&2
   exit 1
 fi
-
-assert_eq() {
-  local label="$1" expected="$2" actual="$3"
-  if [[ "$expected" == "$actual" ]]; then
-    echo "PASS: $label"
-    PASS=$((PASS + 1))
-  else
-    echo "FAIL: $label (expected=$expected, actual=$actual)"
-    FAIL=$((FAIL + 1))
-  fi
-}
 
 # Create mock Lighthouse JSON (mimics raw Lighthouse output structure)
 cat > "$MOCK_FILE" <<'MOCK'
@@ -91,6 +79,4 @@ assert_eq "cls score" "1" "$(echo "$RESULT" | jq '.core_web_vitals.cls.score')"
 assert_eq "tbt score" "1" "$(echo "$RESULT" | jq '.core_web_vitals.tbt.score')"
 
 # Summary
-echo ""
-echo "$PASS passed, $FAIL failed"
-[[ $FAIL -eq 0 ]] && exit 0 || exit 1
+test_summary

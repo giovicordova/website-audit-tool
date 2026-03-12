@@ -68,6 +68,29 @@ Top priority: {highest_impact_fix}.
 ## Structured Data ({score}/100)
 ...
 
+## Benchmark Comparison *(only if +benchmark was requested)*
+
+> Advisory only — not included in the overall score.
+
+**Benchmark site:** {benchmark_domain}
+
+| Pattern | {benchmark_domain} | {target_domain} |
+|---|---|---|
+| JSON-LD types | {types} | {types} |
+| Answer blocks (40-60 word intro) | {Yes/No} | {Yes/No} |
+| Author attribution | {Yes/No} | {Yes/No} |
+| FAQ section with schema | {Yes/No} | {Yes/No} |
+| Published/updated dates | {Yes/No} | {Yes/No} |
+| Content structure | {description} | {description} |
+| Lists + tables | {count} | {count} |
+| Internal link count | {count} | {count} |
+
+### Key Gaps
+{2-3 sentences on what the benchmark site does that the target doesn't}
+
+If benchmark crawl failed, replace the entire section with:
+`SKIPPED — {reason}` (e.g., "Benchmark site blocked crawling" or "Timeout")
+
 ## AI Citation Verification *(only if +citations was requested)*
 
 > Advisory only — not included in the overall score.

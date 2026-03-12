@@ -6,8 +6,10 @@ Claude Code skill package for auditing websites across SEO, AEO, and GEO. Not a 
 
 ```bash
 tests/test-lighthouse-output.sh   # Lighthouse JSON shape validation (13 assertions)
-tests/test-scoring.sh             # Golden-file scoring regression (6 assertions)
+tests/test-scoring.sh             # Golden-file scoring regression (17 assertions)
 tests/test-perplexity-output.sh   # Perplexity citation extraction (8 assertions)
+tests/test-field-coverage.sh      # Reference→extraction.js field coverage (39 assertions)
+tests/test-extraction.sh          # End-to-end extraction against mock HTML (51 assertions)
 ```
 
 ## Naming Conventions
@@ -31,6 +33,7 @@ modules/
   report-template.md            # Report and compare mode formatting
 references/
   aeo.md                        # Answer Engine Optimization checks
+  ai-bots.md                    # AI crawler bot list (training + retrieval)
   geo.md                        # Generative Engine Optimization checks
   indexability.md               # Indexability checks (scored under SEO Technical)
   seo-technical.md              # Technical SEO checks (uses Lighthouse CLI)
@@ -39,12 +42,15 @@ references/
 scripts/
   lighthouse.sh                 # Local Lighthouse CLI wrapper (no API key needed)
   perplexity-check.sh           # Perplexity Sonar API wrapper (requires API key)
-  score.py                      # Deterministic scoring engine
+  score.py                      # Deterministic scoring engine (per-category + overall grade)
 tests/
+  lib/assert.sh                 # Shared test assertion helpers
   test-lighthouse-output.sh     # Lighthouse JSON shape validation (13 assertions)
-  test-scoring.sh               # Golden-file scoring regression tests (6 assertions)
+  test-scoring.sh               # Golden-file scoring regression tests (17 assertions)
   test-perplexity-output.sh     # Perplexity citation extraction (8 assertions)
   fixtures/                     # Synthetic test data (not real site snapshots)
+docs/
+  perspective/                  # Meta-analysis reports about the tool and its competitive landscape
 .claude/
   agents/lighthouse-runner.md   # Background subagent for parallel Lighthouse runs
   agents/perplexity-checker.md  # Background subagent for citation verification

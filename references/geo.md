@@ -38,3 +38,19 @@ Last reviewed: 2026-03-05
 - **Wikipedia:** Accounts for 47.9% of ChatGPT's top-10 most-cited sources — having a Wikipedia presence matters
 - **Multi-platform presence required:** Only 11% of domains get cited by both ChatGPT and Perplexity
 - **New KPIs:** Share of AI Voice (SOV), Citation Frequency, and Brand Visibility Score are replacing traditional ranking metrics
+
+## Required Extraction Fields
+- headings — "Author name visible" (byline detection), heading structure checks
+- timeTags — "Published date present" check
+- publishedDate — "Published date present" check
+- externalLinks — "Sources/references linked" check
+- jsonLd — "Structured data present", "Entity density" checks
+- bodyText — "Fact density", "Quotable passages", "Original data" checks
+- bodyWordCount — "Content depth 800+ words" check
+- images — "Multimodal content" check
+- tableCount — "Multimodal content" (tables/charts) check
+
+## Changelog
+
+### 2026-03-05
+- Initial version — sourced from Google E-E-A-T guidelines, helpful content system docs, Princeton GEO paper (KDD 2024), Ahrefs brand visibility study (75K brands), SurferSEO AI citation report 2025, Search Engine Land GEO guides

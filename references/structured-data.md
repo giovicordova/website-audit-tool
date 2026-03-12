@@ -113,3 +113,16 @@ These are the fields Google **requires** for rich result eligibility. Missing an
 | Course Info (CourseInstance) | Sep 2025 | Basic Course list still works |
 | Estimated Salary | Sep 2025 | |
 | Practice Problem | Jan 2026 | |
+
+## Required Extraction Fields
+- jsonLd — All structured data checks (presence, validity, @type matching, required fields, deprecated types)
+
+## Changelog
+
+### 2026-03-09
+- Added per-type required/recommended fields for all Google rich result types
+- Added deprecated rich result types table
+- Last reviewed date updated
+
+### 2026-03-05
+- Initial version — sourced from Google Rich Results documentation (developers.google.com/search/docs/appearance/structured-data)

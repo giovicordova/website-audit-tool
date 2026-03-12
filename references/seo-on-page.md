@@ -25,3 +25,21 @@ Last reviewed: 2026-03-05
 - [ ] No orphan pages (pages with zero internal links pointing to them)
 - [ ] External links open in new tab (target="_blank" with rel="noopener")
 - [ ] URL length under 75 characters
+
+## Required Extraction Fields
+- h1Count — "One H1 per page" check
+- h1Text — "H1 contains topic words" check
+- title — "Title tag present" check
+- titleLength — "Title tag 50-60 characters" check
+- metaDescription — "Meta description present" check
+- metaDescriptionLength — "Meta description 150-160 characters" check
+- headings — "Heading hierarchy correct" check
+- images — "Images have descriptive alt text" check
+- internalLinks — "Internal links within 3 clicks", "No orphan pages" checks
+- externalLinks — "External links open in new tab" check
+- url — "Clean URL structure", "URL length" checks
+
+## Changelog
+
+### 2026-03-05
+- Initial version — sourced from Google Search Central, web.dev

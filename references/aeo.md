@@ -29,3 +29,18 @@ Last reviewed: 2026-03-05
 - [ ] Content depth: 2,000+ words for informational topics — articles over 2,900 words are 59% more likely to be cited by ChatGPT
   > **Exception:** Pages with `WebApplication` schema (app/tool landing pages) are intentionally minimal. For these pages, reduce the content-depth threshold to 200+ words and do not fail this check if the page serves a functional (non-informational) purpose.
 - [ ] Balanced mix of facts and opinions (pure opinion or pure data alone perform worse than a blend)
+
+## Required Extraction Fields
+- firstParagraph — "First paragraph answers question", "Answer block", "Concise definitions" checks
+- bodyText — "Answer block 40-60 words", "Front-loaded answers in first 200 words", "Clear language" checks
+- bodyWordCount — "Content depth 2000+ words" check
+- headings — "Question-based heading patterns" check
+- hasFAQ — "FAQ section present" check
+- tableCount — "Lists and tables for comparison content" check
+- listCount — "Lists and tables for comparison content" check
+- jsonLd — "FAQ section present" (FAQPage schema detection) check
+
+## Changelog
+
+### 2026-03-05
+- Initial version — sourced from Perplexity AI, ChatGPT web search, Google AI Overviews patterns, Princeton GEO paper (KDD 2024), BrightEdge analysis, SurferSEO citation report, TryProfound citation studies, SE Ranking AI stats

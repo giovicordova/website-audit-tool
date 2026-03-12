@@ -1,23 +1,42 @@
 #!/bin/bash
 # Usage: lighthouse.sh <url>
-# Returns: compact JSON with Lighthouse category scores + Core Web Vitals (LCP, CLS, TBT)
+# Returns: compact JSON on stdout with Lighthouse category scores + Core Web Vitals (LCP, CLS, TBT)
+# On error: JSON with "error" key on stdout, exit 1
 # No API key needed. Runs locally via npx lighthouse.
+
+set -euo pipefail
 
 URL="$1"
 
 if [ -z "$URL" ]; then
-  echo "Usage: lighthouse.sh <url>" >&2
+  echo '{"error": "Usage: lighthouse.sh <url>"}' 
   exit 1
 fi
 
-REPORT=$(npx lighthouse "$URL" \
+# Dependency checks
+if ! command -v npx &>/dev/null; then
+  echo '{"error": "npx not found — Node.js is required"}'
+  exit 1
+fi
+
+if ! command -v jq &>/dev/null; then
+  echo '{"error": "jq not found — install jq"}'
+  exit 1
+fi
+
+STDERR_FILE="/tmp/lighthouse-stderr-$$.log"
+cleanup() { rm -f "$STDERR_FILE"; }
+trap cleanup EXIT
+
+REPORT=$(timeout 90 npx lighthouse "$URL" \
   --output=json \
   --only-categories=performance,accessibility,seo,best-practices \
   --chrome-flags="--headless" \
-  --quiet 2>/dev/null)
+  --quiet 2>"$STDERR_FILE") || true
 
-if [ $? -ne 0 ] || [ -z "$REPORT" ]; then
-  echo '{"error": "Lighthouse run failed"}' >&2
+if [ -z "$REPORT" ]; then
+  STDERR_CONTENT=$(cat "$STDERR_FILE" 2>/dev/null | head -5 | tr '\n' ' ')
+  echo "{\"error\": \"Lighthouse run failed\", \"details\": \"$STDERR_CONTENT\"}"
   exit 1
 fi
 

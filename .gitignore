@@ -8,3 +8,5 @@ PROJECT-BRIEF.md
 AUDIT-REPORT.md
 VISION.md
 .claude/settings.local.json
+node_modules/
+.bg-shell/

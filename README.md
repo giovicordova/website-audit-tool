@@ -1,5 +1,7 @@
 # Website Audit Tool
 
+[![Tests](https://github.com/giovicordova/website-audit-tool/actions/workflows/test.yml/badge.svg)](https://github.com/giovicordova/website-audit-tool/actions/workflows/test.yml)
+
 A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that audits any website across five categories:
 
 - **AEO** -- Answer Engine Optimization (Perplexity, ChatGPT, Google AI Overviews)
@@ -134,19 +136,28 @@ modules/
   report-template.md            # Report and compare mode formatting
 references/
   aeo.md                        # Answer Engine Optimization checks
+  ai-bots.md                    # AI crawler bot list (training + retrieval)
   geo.md                        # Generative Engine Optimization checks
+  indexability.md               # Indexability checks (scored under SEO Technical)
   seo-technical.md              # Technical SEO checks (uses Lighthouse CLI)
   seo-on-page.md                # On-Page SEO checks
   structured-data.md            # Structured Data checks
 scripts/
   lighthouse.sh                 # Local Lighthouse CLI wrapper (no API key needed)
-  score.py                      # Deterministic scoring engine
+  perplexity-check.sh           # Perplexity Sonar API wrapper (requires API key)
+  score.py                      # Deterministic scoring engine (per-category + overall grade)
+  check-schema-deprecations.sh  # Schema deprecation checker for reference refresh
 tests/
+  lib/assert.sh                 # Shared test assertion helpers
   test-lighthouse-output.sh     # Lighthouse JSON shape validation (13 assertions)
-  test-scoring.sh               # Golden-file scoring regression tests (6 assertions)
-  fixtures/                     # Synthetic test data (not real site snapshots)
+  test-scoring.sh               # Golden-file scoring regression tests (17 assertions)
+  test-perplexity-output.sh     # Perplexity citation extraction (8 assertions)
+  test-field-coverage.sh        # Reference→extraction.js field coverage (39 assertions)
+  test-extraction.sh            # End-to-end extraction against mock HTML (51 assertions)
+  fixtures/                     # Synthetic test data and mock site
 .claude/
   agents/lighthouse-runner.md   # Background subagent for parallel Lighthouse runs
+  agents/perplexity-checker.md  # Background subagent for citation verification
   hooks/validate-report-name.sh # Enforces report naming convention
   settings.json                 # Permission allowlist and hook config
 ```

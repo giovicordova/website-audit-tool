@@ -27,3 +27,16 @@ Last reviewed: 2026-03-05
 - [ ] Lighthouse accessibility score >= 90 — **CONDITIONAL: if Lighthouse fails, mark as UNTESTABLE and exclude from score denominator.**
 - [ ] hreflang tags present if site has multiple languages — **CONDITIONAL: only check if site serves content in 2+ languages. Mark N/A for single-language sites.**
 - [ ] 404 page exists and returns proper 404 status code
+
+## Required Extraction Fields
+- viewport — "Mobile viewport meta tag" check
+- canonical — "Canonical tag present" check
+- title — "No duplicate title tags" check
+- metaDescription — "No duplicate meta descriptions" check
+- httpLinks — "HTTPS on all pages" (mixed content) check
+- internalLinks — "All internal links return 200" check
+
+## Changelog
+
+### 2026-03-05
+- Initial version — sourced from Google Search Central, web.dev, web.dev/vitals
